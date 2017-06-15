@@ -4,7 +4,7 @@
 Required software:
 
 * Julia 0.5.2 available from https://julialang.org/downloads/
-* Some julia package, which can be installed with these commands once you started Julia:
+* Some julia packages, which can be installed with these commands once you started Julia:
 
 ```julia
 Pkg.clone("https://github.com/gher-ulg/divand.jl")
