@@ -3,7 +3,7 @@
 
 Required software:
 
-* Julia 0.5.2 available from https://julialang.org/downloads/
+* Julia available from https://julialang.org/downloads/
 * Some julia packages, which can be installed with these commands once you started Julia:
 
 ```julia
