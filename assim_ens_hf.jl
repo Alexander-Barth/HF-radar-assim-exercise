@@ -37,7 +37,7 @@ function ETKF_HXf(Xf,HXf,y,R)
     U_T = e.vectors
     Sigma_T = Diagonal(e.values)
 
-    T = U_T * (sqrt(Sigma_T) \ U_T')
+    T = U_T * (sqrt.(Sigma_T) \ U_T')
     Xap = sqrt(N-1) * Xfp * T
     xa = xf + Xfp * (U_T * (inv(Sigma_T) * U_T' * (invR_S' * (y - Hxf))))
 
@@ -106,8 +106,8 @@ ncclose(gridname)
 contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
 plot(lonobs[:],latobs[:],".")
 
-mask_u = !isnan(u[:,:,1,1]);
-mask_v = !isnan(v[:,:,1,1]);
+mask_u = .!isnan(u[:,:,1,1]);
+mask_v = .!isnan(v[:,:,1,1]);
 
 sv = divand.statevector_init((BitArray(mask_u),BitArray(mask_v)));
 allX = divand.packens(sv,(squeeze(u,3),squeeze(v,3)));
@@ -127,12 +127,12 @@ function spobsoper_radvel(sv,modelgrid,Xobs,varindexu,varindexv,bearing)
     b = bearing[:]*pi/180
 
     Hgridu = spzeros(length(Xobs[1]),sv.n)
-    Hgridu[:,sv.ind[varindexu]+1:sv.ind[varindexu+1]] = spdiagm(sin(b)) * Hu * sparse_pack(sv.mask[varindexu])'
+    Hgridu[:,sv.ind[varindexu]+1:sv.ind[varindexu+1]] = spdiagm(sin.(b)) * Hu * sparse_pack(sv.mask[varindexu])'
 
     Hgridv = spzeros(length(Xobs[1]),sv.n)
-    Hgridv[:,sv.ind[varindexv]+1:sv.ind[varindexv+1]] = spdiagm(-cos(b)) * Hv * sparse_pack(sv.mask[varindexv])'
+    Hgridv[:,sv.ind[varindexv]+1:sv.ind[varindexv+1]] = spdiagm(-cos.(b)) * Hv * sparse_pack(sv.mask[varindexv])'
     
-    valid = !outu & !outv
+    valid = .!outu & .!outv
     H = sparse_pack(valid) * (Hgridu + Hgridv)
     return H,valid
 end
