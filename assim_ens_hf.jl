@@ -47,19 +47,13 @@ function ETKF_HXf(Xf,HXf,y,R)
 
 end
 
-datadir = joinpath(ENV["HOME"],"tmp","AssimStripes")
+datadir = joinpath(dirname(@__FILE__),"data")
 
 fname = joinpath(datadir,"ensemble_surface.mat")
 f = matopen(fname)
 u = read(f,"Us");
 v = read(f,"Vs");
 close(f)
-
-
-
-
-
-
 
 
 km2deg(x) = 180 * x / (pi * 6371)
@@ -97,7 +91,7 @@ latobs = [latobs1[:]; latobs2[:]]
 
 
 
-gridname = joinpath(ENV["HOME"],"Models/LigurianSea/LigurianSea.nc")
+gridname = joinpath(datadir,"LigurianSea.nc")
 nc = NetCDF.open(gridname); 
 lon_u = nc["lon_u"][:,:]
 lat_u = nc["lat_u"][:,:]

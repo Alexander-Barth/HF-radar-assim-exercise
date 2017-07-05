@@ -12,6 +12,7 @@ Pkg.clone("https://github.com/Alexander-Barth/GeoMapping.jl")
 Pkg.add("NetCDF")
 Pkg.add("PyPlot")
 Pkg.add("MAT")
+Pkg.add("IJulia")
 ```
 
 
