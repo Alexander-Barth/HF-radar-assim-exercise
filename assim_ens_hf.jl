@@ -1,7 +1,6 @@
 using Base.Test
 using NetCDF
 using MAT
-using divand
 using Interpolations
 using Base
 using GeoMapping
@@ -49,6 +48,22 @@ function ETKF_HXf(Xf,HXf,y,R)
 
 end
 
+function plotvel(u,v; legendvec = 1)
+    us = (u[1:end-1,2:end-1] + u[2:end,2:end-1]) / 2.
+    vs = (v[2:end-1,1:end-1] + v[2:end-1,2:end]) / 2.
+    r = 5
+    
+    ur = us[1:r:end,1:r:end]
+    vr = vs[1:r:end,1:r:end]
+    lonr = lon[2:end-1,2:end-1][1:r:end,1:r:end]
+    latr = lat[2:end-1,2:end-1][1:r:end,1:r:end]
+
+    ur[end-5,end-3] = legendvec
+    vr[end-5,end-3] = 0
+    contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
+    quiver(lonr,latr,ur,vr)
+end
+
 datadir = joinpath(dirname(@__FILE__),"data")
 
 fname = joinpath(datadir,"ensemble_surface.mat")
@@ -63,8 +78,6 @@ km2deg(x) = 180 * x / (pi * 6371)
 
 function radarobsloc(lon0,lat0,r,bearing)
 
-    #R,Bearing = divand.ndgrid(r,bearing);
-    
     sz = (length(r),length(bearing))
     latobs2 = zeros(sz)
     lonobs2 = zeros(sz)
@@ -107,14 +120,13 @@ mask = nc["mask_rho"][:,:]
 ncclose(gridname)
 
 
-#contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
-#plot(lonobs[:],latobs[:],".")
+figure()
+contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
+plot(lonobs[:],latobs[:],".")
 
 mask_u = .!isnan.(u[:,:,1,1]);
 mask_v = .!isnan.(v[:,:,1,1]);
 
-sv = divand.statevector_init((BitArray(mask_u),BitArray(mask_v)));
-allX = divand.packens(sv,(squeeze(u,3),squeeze(v,3)));
 
 function packsv(mask_u,mask_v,u,v)
     return [u[mask_u]; v[mask_v]]
@@ -130,25 +142,21 @@ function unpacksv(mask_u,mask_v,x)
 end
 
 
-Xf = allX[:,1:end-1]
-xf = mean(Xf,2)
-xt = allX[:,end]
-
-xt2 = packsv(mask_u,mask_v,u[:,:,1,end],v[:,:,1,end])
+xt = packsv(mask_u,mask_v,u[:,:,1,end],v[:,:,1,end])
 
 n = sum(mask_u) + sum(mask_v)
 Nens = size(u,4)-1
 
-Xf2 = zeros(n,Nens)
+Xf = zeros(n,Nens)
 for n = 1:Nens
-    Xf2[:,n] = packsv(mask_u,mask_v,u[:,:,1,n],v[:,:,1,n])
+    Xf[:,n] = packsv(mask_u,mask_v,u[:,:,1,n],v[:,:,1,n])
 end
 
-@show rms(Xf2,Xf)
+xf = mean(Xf,2)
 
-u3,v3 = unpacksv(mask_u,mask_v,xt2)
 
-@show rms(xt2,xt)
+u3,v3 = unpacksv(mask_u,mask_v,xt)
+
 @show isequal(u3, u[:,:,1,end])
 @show isequal(v3, v[:,:,1,end])
 
@@ -173,7 +181,7 @@ end
 yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,end],v[:,:,1,end],lonobs,latobs,bearingobs)
 # add noise to yo
 
-Rd = Diagonal([0.2 for i = 1:length(yo)])
+Rd = Diagonal([0.01 for i = 1:length(yo)])
 
 
 HXf = zeros(length(yo),size(u,4)-1)
@@ -186,6 +194,8 @@ end
 
 Xa,xa = ETKF_HXf(Xf,HXf,yo,Rd)
 
+uf,vf = unpacksv(mask_u,mask_v,xf)
+ua,va = unpacksv(mask_u,mask_v,xa)
 
 @show rms(xf,xt)
 @show rms(xa,xt)
