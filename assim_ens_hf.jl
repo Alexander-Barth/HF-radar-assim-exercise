@@ -7,6 +7,8 @@ using Base
 using GeoMapping
 using PyPlot
 
+rms(a,b) = sqrt(mean((a - b).^2))
+
 
 """
 Ensemble Transform Kalman Filter
@@ -103,11 +105,11 @@ mask = nc["mask_rho"][:,:]
 ncclose(gridname)
 
 
-contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
-plot(lonobs[:],latobs[:],".")
+#contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
+#plot(lonobs[:],latobs[:],".")
 
-mask_u = .!isnan(u[:,:,1,1]);
-mask_v = .!isnan(v[:,:,1,1]);
+mask_u = .!isnan.(u[:,:,1,1]);
+mask_v = .!isnan.(v[:,:,1,1]);
 
 sv = divand.statevector_init((BitArray(mask_u),BitArray(mask_v)));
 allX = divand.packens(sv,(squeeze(u,3),squeeze(v,3)));
@@ -132,7 +134,7 @@ function spobsoper_radvel(sv,modelgrid,Xobs,varindexu,varindexv,bearing)
     Hgridv = spzeros(length(Xobs[1]),sv.n)
     Hgridv[:,sv.ind[varindexv]+1:sv.ind[varindexv+1]] = spdiagm(-cos.(b)) * Hv * sparse_pack(sv.mask[varindexv])'
     
-    valid = .!outu & .!outv
+    valid = .!outu .& .!outv
     H = sparse_pack(valid) * (Hgridu + Hgridv)
     return H,valid
 end
@@ -142,9 +144,25 @@ modelgrid = ((lon_u,lat_u),(lon_v,lat_v))
 
 varindex = 1
 
+function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
+    itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
+    itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
+    b = bearingobs[:]*pi/180
+#    lonobs = lonobs[:]
+#    latobs = latobs[:]
+
+    ur3 = [sin(b[i]) * itpu[lonobs[i],latobs[i]] - cos(b[i]) * itpv[lonobs[i],latobs[i]] for i = 1:length(b)];
+    return ur3[.!isnan.(ur3)]
+end
+
+
 
 H,valid = spobsoper_radvel(sv,modelgrid,(lonobs,latobs),1,2,bearingobs)
 ur2 = H * allX[:,end]
+
+ur3 = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,end],v[:,:,1,end],lonobs,latobs,bearingobs)
+@show rms(ur3,ur2)
+
 
 xt = allX[:,end]
 xf = mean(Xf,2)
@@ -160,13 +178,20 @@ Hx = H*xt
 
 yo = H*xt
 
-Rd = Diagonal([1. for i = 1:m])
+Rd = Diagonal([0.2 for i = 1:m])
 
 HXf = H*Xf
 
+ur4 = zeros(length(ur3),size(u,4)-1)
+
+for i = 1:size(u,4)-1
+    ur4[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,i],v[:,:,1,i],lonobs,latobs,bearingobs)
+end
+
+
+
 Xa,xa = ETKF_HXf(Xf,HXf,yo,Rd)
 
-rms(a,b) = sqrt(mean((a - b).^2))
 
 @show rms(xf,xt)
 @show rms(xa,xt)
