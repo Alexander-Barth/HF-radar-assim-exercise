@@ -63,14 +63,16 @@ km2deg(x) = 180 * x / (pi * 6371)
 
 function radarobsloc(lon0,lat0,r,bearing)
 
-    R,Bearing = divand.ndgrid(r,bearing);
+    #R,Bearing = divand.ndgrid(r,bearing);
     
-    latobs2 = zeros(size(R))
-    lonobs2 = zeros(size(R))
+    sz = (length(r),length(bearing))
+    latobs2 = zeros(sz)
+    lonobs2 = zeros(sz)
+    Bearing = zeros(sz)
     
     for j = 1:length(bearing)
         for i = 1:length(r)
-            
+            Bearing[i,j] = bearing[j]            
             latobs2[i,j],lonobs2[i,j] = reckon(lat0, lon0, 
                                                km2deg(r[i]), -bearing[j])
         end
@@ -114,35 +116,42 @@ mask_v = .!isnan.(v[:,:,1,1]);
 sv = divand.statevector_init((BitArray(mask_u),BitArray(mask_v)));
 allX = divand.packens(sv,(squeeze(u,3),squeeze(v,3)));
 
+function packsv(mask_u,mask_v,u,v)
+    return [u[mask_u]; v[mask_v]]
+end
 
-
-Xf = allX[:,1:end-1];
-
-
-
-Hu,out,outbox = divand.sparse_interp_g((lon_u,lat_u),mask_u,(lonobs,latobs))
-
-function spobsoper_radvel(sv,modelgrid,Xobs,varindexu,varindexv,bearing)
-    Hu,outu,outboxu = divand.sparse_interp_g(modelgrid[varindexu],sv.mask[varindexu],Xobs)
-    Hv,outv,outboxv = divand.sparse_interp_g(modelgrid[varindexv],sv.mask[varindexv],Xobs)
-
-    b = bearing[:]*pi/180
-
-    Hgridu = spzeros(length(Xobs[1]),sv.n)
-    Hgridu[:,sv.ind[varindexu]+1:sv.ind[varindexu+1]] = spdiagm(sin.(b)) * Hu * sparse_pack(sv.mask[varindexu])'
-
-    Hgridv = spzeros(length(Xobs[1]),sv.n)
-    Hgridv[:,sv.ind[varindexv]+1:sv.ind[varindexv+1]] = spdiagm(-cos.(b)) * Hv * sparse_pack(sv.mask[varindexv])'
-    
-    valid = .!outu .& .!outv
-    H = sparse_pack(valid) * (Hgridu + Hgridv)
-    return H,valid
+function unpacksv(mask_u,mask_v,x)
+    n = sum(mask_u)
+    u = fill(NaN,size(mask_u))
+    v = fill(NaN,size(mask_v))
+    u[mask_u] = x[1:n]
+    v[mask_v] = x[n+1:end]
+    return u,v
 end
 
 
-modelgrid = ((lon_u,lat_u),(lon_v,lat_v))
+Xf = allX[:,1:end-1]
+xf = mean(Xf,2)
+xt = allX[:,end]
 
-varindex = 1
+xt2 = packsv(mask_u,mask_v,u[:,:,1,end],v[:,:,1,end])
+
+n = sum(mask_u) + sum(mask_v)
+Nens = size(u,4)-1
+
+Xf2 = zeros(n,Nens)
+for n = 1:Nens
+    Xf2[:,n] = packsv(mask_u,mask_v,u[:,:,1,n],v[:,:,1,n])
+end
+
+@show rms(Xf2,Xf)
+
+u3,v3 = unpacksv(mask_u,mask_v,xt2)
+
+@show rms(xt2,xt)
+@show isequal(u3, u[:,:,1,end])
+@show isequal(v3, v[:,:,1,end])
+
 
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
     itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
@@ -157,35 +166,20 @@ end
 
 
 
-H,valid = spobsoper_radvel(sv,modelgrid,(lonobs,latobs),1,2,bearingobs)
-ur2 = H * allX[:,end]
-
-ur3 = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,end],v[:,:,1,end],lonobs,latobs,bearingobs)
-@show rms(ur3,ur2)
-
-
-xt = allX[:,end]
-xf = mean(Xf,2)
-
-const m = sum(valid)
-
-
-
-Hx = H*xt
 
 #yo = H * xt + alpha * randn(m) + beta * SE * randn(Neof)
-#yo = matread(joinpath(datadir,"yo.mat"))["yo"];
 
-yo = H*xt
 
-Rd = Diagonal([0.2 for i = 1:m])
+yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,end],v[:,:,1,end],lonobs,latobs,bearingobs)
+# add noise to yo
 
-HXf = H*Xf
+Rd = Diagonal([0.2 for i = 1:length(yo)])
 
-ur4 = zeros(length(ur3),size(u,4)-1)
+
+HXf = zeros(length(yo),size(u,4)-1)
 
 for i = 1:size(u,4)-1
-    ur4[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,i],v[:,:,1,i],lonobs,latobs,bearingobs)
+    HXf[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,i],v[:,:,1,i],lonobs,latobs,bearingobs)
 end
 
 
