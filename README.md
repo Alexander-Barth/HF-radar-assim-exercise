@@ -1,16 +1,18 @@
 # HF-radar-assim-caen
 
 
+## Setting-up your work environment
+
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 0.6 of julia.
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 0.6 of Julia.
 * The version control tool git. Under Debian/Ubuntu this can be done by the following programs
 
 ```bash
 sudo apt-get install git
 ```
 
-* Some julia packages, which can be installed with these commands once you started Julia:
+* Some Julia packages, which can be installed with these commands once you started Julia:
 
 ```julia
 Pkg.clone("https://github.com/gher-ulg/divand.jl")
@@ -38,7 +40,7 @@ cat >> ~/.emacs <<EOF
 EOF
 ```
 
-## Optionally
+### Optionally
 
 * Install a desktop launcher and icon for julia
 
@@ -52,7 +54,7 @@ cd ~
 ```
 
 
-# Exercise
+## Exercise
 
 * Get the code for the exercise:
 
@@ -63,3 +65,8 @@ git clone https://github.com/Alexander-Barth/HF-radar-assim-caen.git
 This create the folder `HF-radar-assim-caen`
 
 * The data for the exercise is in the folder `/home/invites/barth/HF-radar-assim-caen/data` on the host n304l-401001 and should be copied inside of the directory `HF-radar-assim-caen`.
+
+<!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
+ -->
+<!--  LocalWords:  mkdir wget emacs EOF setq alist jl dir
+ -->
