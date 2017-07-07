@@ -51,3 +51,15 @@ wget https://raw.githubusercontent.com/JuliaLang/julia/30bf89f3d8e564b588b8e4899
 cd ~
 ```
 
+
+# Exercise
+
+* Get the code for the exercise:
+
+```bash
+git clone https://github.com/Alexander-Barth/HF-radar-assim-caen.git
+```
+
+This create the folder `HF-radar-assim-caen`
+
+* The data for the exercise is in the folder `/home/invites/barth/HF-radar-assim-caen/data` on the host n304l-401001 and should be copied inside of the directory `HF-radar-assim-caen`.
