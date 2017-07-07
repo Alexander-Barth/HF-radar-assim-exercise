@@ -1,8 +1,6 @@
-using Base.Test
 using NetCDF
 using MAT
 using Interpolations
-using Base
 using GeoMapping
 using PyPlot
 
@@ -68,8 +66,12 @@ datadir = joinpath(dirname(@__FILE__),"data")
 
 fname = joinpath(datadir,"ensemble_surface.mat")
 f = matopen(fname)
-u = read(f,"Us");
+u = read(f,"Us"); 
 v = read(f,"Vs");
+
+u = squeeze(u,3)
+v = squeeze(v,3)
+
 close(f)
 
 
@@ -124,8 +126,8 @@ figure()
 contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
 plot(lonobs[:],latobs[:],".")
 
-mask_u = .!isnan.(u[:,:,1,1]);
-mask_v = .!isnan.(v[:,:,1,1]);
+mask_u = .!isnan.(u[:,:,1]);
+mask_v = .!isnan.(v[:,:,1]);
 
 
 function packsv(mask_u,mask_v,u,v)
@@ -142,14 +144,14 @@ function unpacksv(mask_u,mask_v,x)
 end
 
 
-xt = packsv(mask_u,mask_v,u[:,:,1,end],v[:,:,1,end])
+xt = packsv(mask_u,mask_v,u[:,:,end],v[:,:,end])
 
 n = sum(mask_u) + sum(mask_v)
-Nens = size(u,4)-1
+Nens = size(u,3)-1
 
 Xf = zeros(n,Nens)
 for n = 1:Nens
-    Xf[:,n] = packsv(mask_u,mask_v,u[:,:,1,n],v[:,:,1,n])
+    Xf[:,n] = packsv(mask_u,mask_v,u[:,:,n],v[:,:,n])
 end
 
 xf = mean(Xf,2)
@@ -157,8 +159,8 @@ xf = mean(Xf,2)
 
 u3,v3 = unpacksv(mask_u,mask_v,xt)
 
-@show isequal(u3, u[:,:,1,end])
-@show isequal(v3, v[:,:,1,end])
+@show isequal(u3, u[:,:,end])
+@show isequal(v3, v[:,:,end])
 
 
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
@@ -178,16 +180,16 @@ end
 #yo = H * xt + alpha * randn(m) + beta * SE * randn(Neof)
 
 
-yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,end],v[:,:,1,end],lonobs,latobs,bearingobs)
+yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,end],v[:,:,end],lonobs,latobs,bearingobs)
 # add noise to yo
 
-Rd = Diagonal([0.01 for i = 1:length(yo)])
+Rd = Diagonal([0.2 for i = 1:length(yo)])
 
 
-HXf = zeros(length(yo),size(u,4)-1)
+HXf = zeros(length(yo),size(u,3)-1)
 
-for i = 1:size(u,4)-1
-    HXf[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,1,i],v[:,:,1,i],lonobs,latobs,bearingobs)
+for i = 1:size(u,3)-1
+    HXf[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,i],v[:,:,i],lonobs,latobs,bearingobs)
 end
 
 
@@ -199,3 +201,16 @@ ua,va = unpacksv(mask_u,mask_v,xa)
 
 @show rms(xf,xt)
 @show rms(xa,xt)
+
+
+us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
+vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
+
+
+varvel = var(us,3) + var(vs,3)
+pcolor(varvel[:,:,1]')
+
+normvel = sqrt.(us.^2 + vs.^2);
+prob = mean(normvel .> 0.2,3)
+
+pcolor(prob[:,:,1]'); colorbar()
