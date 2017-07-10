@@ -15,7 +15,7 @@ or arrays, e.g.
 my_array = [1 2 3; 4 5 6]  # a matrix with 2 rows and 3 columns
 ```
 
-Indexing behaves like matlab except that square brackets are used
+Indexing behaves like matlab except that square brackets are used. Indices start with 1. Thus the first row and second colmn of the previous array would be `my_array[1,2]` (here the value 2).
 
 ## Operators
 
