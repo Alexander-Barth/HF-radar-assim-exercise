@@ -12,7 +12,7 @@ rms(a,b) = sqrt(mean((a - b).^2))
 
 
 """
-Ensemble Transform Kalman Filter
+Ensemble Transform Kalman Filter where Xf is the forecast ensemble, HXf the observed part of the forecast ensemble, y the observations and R the observation error covariance.
 """
 function ETKF_HXf(Xf,HXf,y,R)
 
@@ -50,6 +50,8 @@ function ETKF_HXf(Xf,HXf,y,R)
 
 end
 
+
+"Plot the vector field with the comonents u and v. The parameter legendvec is an optional argument representing the length of the legend vector"
 function plotvel(u,v; legendvec = 1)
     us = (u[1:end-1,2:end-1] + u[2:end,2:end-1]) / 2.
     vs = (v[2:end-1,1:end-1] + v[2:end-1,2:end]) / 2.
@@ -60,14 +62,17 @@ function plotvel(u,v; legendvec = 1)
     lonr = lon[2:end-1,2:end-1][1:r:end,1:r:end]
     latr = lat[2:end-1,2:end-1][1:r:end,1:r:end]
 
-    ur[end-5,end-3] = legendvec
-    vr[end-5,end-3] = 0
+    ur[end-7,end-3] = legendvec
+    vr[end-7,end-3] = 0
     contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
     quiver(lonr,latr,ur,vr)
 end
 
+# location of the data
+# @__FILE__is the path of the current file assim_ens_hf.jl
 datadir = joinpath(dirname(@__FILE__),"data")
 
+# load the NetCDF varibles u and v
 fname = joinpath(datadir,"ensemble_surface.nc")
 nc = NetCDF.open(fname)
 u = nc["u"][:,:,:]
@@ -75,10 +80,11 @@ v = nc["v"][:,:,:]
 ncclose(fname)
 
 
-
+"convert km to arc degree on the surface of the Earth"
 km2deg(x) = 180 * x / (pi * 6371)
 
 
+"""Compute the location of the radial velocities covered by an HF radar site located at lon0,lat0. The vector r are the ranges (in km) and bearing are the angles (in degree)"""
 function radarobsloc(lon0,lat0,r,bearing)
 
     sz = (length(r),length(bearing))
@@ -90,16 +96,21 @@ function radarobsloc(lon0,lat0,r,bearing)
         for i = 1:length(r)
             Bearing[i,j] = bearing[j]            
             latobs2[i,j],lonobs2[i,j] = reckon(lat0, lon0, 
-                                               km2deg(r[i]), -bearing[j])
+                                               km2deg(r[i]), bearing[j])
         end
     end
 
     return lonobs2,latobs2,Bearing
 end
 
-lonobs1,latobs1,bearingobs1 = radarobsloc(9.84361,44.04167,20:50,69:5:179)
 
-lonobs2,latobs2,bearingobs2 = radarobsloc(10,43,20:50,69:5:179)
+sitelon1 = 9.84361
+sitelat1 = 44.04167
+lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,20:50,240 + (-60:5:60))
+
+sitelon2 = 10.46
+sitelat2 = 43.37
+lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,20:50,240 + (-60:5:60))
 
 bearingobs = bearingobs1[:]
 lonobs = lonobs1[:]
@@ -124,8 +135,13 @@ ncclose(gridname)
 
 
 figure()
+
 contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
-plot(lonobs[:],latobs[:],".")
+
+plot(sitelon1,sitelat1,"x")
+plot(lonobs1[:],latobs1[:],".")
+plot(sitelon2,sitelat2,"x")
+plot(lonobs2[:],latobs2[:],".")
 
 mask_u = .!isnan.(u[:,:,1]);
 mask_v = .!isnan.(v[:,:,1]);
@@ -209,11 +225,14 @@ vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
 
 
 varvel = var(us,3) + var(vs,3)
+figure()
 pcolor(varvel[:,:,1]')
+colorbar()
 
 normvel = sqrt.(us.^2 + vs.^2);
 prob = mean(normvel .> 0.2,3)
 
+figure()
 pcolor(prob[:,:,1]'); colorbar()
 
 figure(),plotvel(uf,vf; legendvec = 1)
