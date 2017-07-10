@@ -64,7 +64,7 @@ git clone https://github.com/Alexander-Barth/HF-radar-assim-caen.git
 
 This create the folder `HF-radar-assim-caen`
 
-* The data for the exercise is in the folder `/home/invites/barth/HF-radar-assim-caen/data` on the host n304l-401001 and this folder should be copied inside of the directory `HF-radar-assim-caen`.
+* The data for the exercise is in the NetCDF files in the folder `https://dox.ulg.ac.be/index.php/s/iZXK0toRe4wvyKs`. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-caen/data`.
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
  -->
