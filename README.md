@@ -66,6 +66,8 @@ This create the folder `HF-radar-assim-caen`
 
 * The data for the exercise is in the NetCDF files in the folder `https://dox.ulg.ac.be/index.php/s/iZXK0toRe4wvyKs`. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-caen/data`.
 
+
+
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
  -->
 <!--  LocalWords:  mkdir wget emacs EOF setq alist jl dir
