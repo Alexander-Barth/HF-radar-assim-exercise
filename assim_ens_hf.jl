@@ -1,8 +1,12 @@
 using NetCDF
-using MAT
 using Interpolations
 using GeoMapping
 using PyPlot
+
+
+"""
+Compute the RMS difference between a and b
+"""
 
 rms(a,b) = sqrt(mean((a - b).^2))
 
@@ -64,15 +68,12 @@ end
 
 datadir = joinpath(dirname(@__FILE__),"data")
 
-fname = joinpath(datadir,"ensemble_surface.mat")
-f = matopen(fname)
-u = read(f,"Us"); 
-v = read(f,"Vs");
+fname = joinpath(datadir,"ensemble_surface.nc")
+nc = NetCDF.open(fname)
+u = nc["u"][:,:,:]
+v = nc["v"][:,:,:]
+ncclose(fname)
 
-u = squeeze(u,3)
-v = squeeze(v,3)
-
-close(f)
 
 
 km2deg(x) = 180 * x / (pi * 6371)
@@ -110,7 +111,7 @@ latobs = [latobs1[:]; latobs2[:]]
 
 
 
-gridname = joinpath(datadir,"LigurianSea.nc")
+gridname = joinpath(datadir,"LS2v.nc")
 nc = NetCDF.open(gridname); 
 lon_u = nc["lon_u"][:,:]
 lat_u = nc["lat_u"][:,:]
@@ -214,3 +215,7 @@ normvel = sqrt.(us.^2 + vs.^2);
 prob = mean(normvel .> 0.2,3)
 
 pcolor(prob[:,:,1]'); colorbar()
+
+figure(),plotvel(uf,vf; legendvec = 1)
+figure(),plotvel(ua,va; legendvec = 1)
+
