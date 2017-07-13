@@ -54,8 +54,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="97.499297"
-     inkscape:cy="166.80929"
+     inkscape:cx="252.96717"
+     inkscape:cy="146.60624"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -226,5 +226,16 @@
          id="tspan5405"
          x="330.06607"
          y="376.78116">Direction α</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="459.76822"
+       y="394.74377"
+       id="text5420"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5422"
+         x="459.76822"
+         y="394.74377"> α = β - 180°</tspan></text>
   </g>
 </svg>

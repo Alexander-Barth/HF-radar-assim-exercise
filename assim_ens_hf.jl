@@ -47,16 +47,69 @@ function ETKF_HXf(Xf,HXf,y,R)
     Xa = Xap + repmat(xa,1,N)
 
     return Xa,xa
+end
 
+"""
+x = packsv(mask_u,mask_v,u,v)
+combine the velocity field with the component u and v
+in a single state vector where the corresponding elements of
+the masks mask_u and mask_v are true"""
+function packsv(mask_u,mask_v,u,v)
+    return [u[mask_u]; v[mask_v]]
+end
+
+"""
+u,v = unpacksv(mask_u,mask_v,x)
+Extract from a state vector x the compoennts u and v. It is the reverse operation of packsv.
+"""
+function unpacksv(mask_u,mask_v,x)
+    n = sum(mask_u)
+    u = fill(NaN,size(mask_u))
+    v = fill(NaN,size(mask_v))
+    u[mask_u] = x[1:n]
+    v[mask_v] = x[n+1:end]
+    return u,v
+end
+
+"convert km to arc degree on the surface of the Earth"
+km2deg(x) = 180 * x / (pi * 6371)
+
+
+"""
+lonobs,latobs,Bearing = radarobsloc(lon0,lat0,r,bearing)
+Compute the location of the radial velocities covered by an HF radar site located at lon0,lat0. The vector r are the ranges (in km) and bearing are the angles (in degree). It also returns the matrix Bearing which has the same size as the matrices lonobs and latobs where the bearing angle is repeated for the different ranges.
+"""
+
+function radarobsloc(lon0,lat0,r,bearing)
+
+    sz = (length(r),length(bearing))
+    latobs = zeros(sz)
+    lonobs = zeros(sz)
+    Bearing = zeros(sz)
+
+    for j = 1:length(bearing)
+        for i = 1:length(r)
+            Bearing[i,j] = bearing[j]
+            latobs[i,j],lonobs[i,j] = reckon(lat0, lon0,
+                                             km2deg(r[i]), bearing[j])
+        end
+    end
+
+    return lonobs,latobs,Bearing
 end
 
 
-"Plot the vector field with the comonents u and v. The parameter legendvec is an optional argument representing the length of the legend vector"
+
+"""
+plotvel(u,v; legendvec = 1)
+Plot the vector field with the comonents u and v. The parameter legendvec is an optional argument representing the length of the legend vector
+"""
+
 function plotvel(u,v; legendvec = 1)
     us = (u[1:end-1,2:end-1] + u[2:end,2:end-1]) / 2.
     vs = (v[2:end-1,1:end-1] + v[2:end-1,2:end]) / 2.
     r = 5
-    
+
     ur = us[1:r:end,1:r:end]
     vr = vs[1:r:end,1:r:end]
     lonr = lon[2:end-1,2:end-1][1:r:end,1:r:end]
@@ -67,6 +120,19 @@ function plotvel(u,v; legendvec = 1)
     contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
     quiver(lonr,latr,ur,vr)
 end
+
+"""
+ur = interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
+Interpolate and rotate the velocity vertors to compute the radial velcity `ur`.
+"""
+function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
+    itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
+    itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
+    b = bearingobs[:]*pi/180
+    ur = [sin(b[i]) * itpu[lonobs[i],latobs[i]] - cos(b[i]) * itpv[lonobs[i],latobs[i]] for i = 1:length(b)];
+    return ur[.!isnan.(ur)]
+end
+
 
 # location of the data
 # @__FILE__is the path of the current file assim_ens_hf.jl
@@ -80,37 +146,30 @@ v = nc["v"][:,:,:]
 ncclose(fname)
 
 
-"convert km to arc degree on the surface of the Earth"
-km2deg(x) = 180 * x / (pi * 6371)
+# load the model grid
 
+gridname = joinpath(datadir,"LS2v.nc")
+nc = NetCDF.open(gridname);
+lon_u = nc["lon_u"][:,:]
+lat_u = nc["lat_u"][:,:]
+lon_v = nc["lon_v"][:,:]
+lat_v = nc["lat_v"][:,:]
+lon = nc["lon_rho"][:,:]
+lat = nc["lat_rho"][:,:]
+mask = nc["mask_rho"][:,:]
+ncclose(gridname)
 
-"""Compute the location of the radial velocities covered by an HF radar site located at lon0,lat0. The vector r are the ranges (in km) and bearing are the angles (in degree)"""
-function radarobsloc(lon0,lat0,r,bearing)
-
-    sz = (length(r),length(bearing))
-    latobs2 = zeros(sz)
-    lonobs2 = zeros(sz)
-    Bearing = zeros(sz)
-    
-    for j = 1:length(bearing)
-        for i = 1:length(r)
-            Bearing[i,j] = bearing[j]            
-            latobs2[i,j],lonobs2[i,j] = reckon(lat0, lon0, 
-                                               km2deg(r[i]), bearing[j])
-        end
-    end
-
-    return lonobs2,latobs2,Bearing
-end
-
+# location of the observations
 
 sitelon1 = 9.84361
 sitelat1 = 44.04167
-lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,20:50,240 + (-60:5:60))
+siteorientation1 = 240
+lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,20:50,siteorientation1 + (-60:5:60))
 
 sitelon2 = 10.46
 sitelat2 = 43.37
-lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,20:50,240 + (-60:5:60))
+siteorientation2 = 240
+lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,20:50,siteorientation2 + (-60:5:60))
 
 bearingobs = bearingobs1[:]
 lonobs = lonobs1[:]
@@ -122,16 +181,6 @@ latobs = [latobs1[:]; latobs2[:]]
 
 
 
-gridname = joinpath(datadir,"LS2v.nc")
-nc = NetCDF.open(gridname); 
-lon_u = nc["lon_u"][:,:]
-lat_u = nc["lat_u"][:,:]
-lon_v = nc["lon_v"][:,:]
-lat_v = nc["lat_v"][:,:]
-lon = nc["lon_rho"][:,:]
-lat = nc["lat_rho"][:,:]
-mask = nc["mask_rho"][:,:]
-ncclose(gridname)
 
 
 figure()
@@ -146,19 +195,6 @@ plot(lonobs2[:],latobs2[:],".")
 mask_u = .!isnan.(u[:,:,1]);
 mask_v = .!isnan.(v[:,:,1]);
 
-
-function packsv(mask_u,mask_v,u,v)
-    return [u[mask_u]; v[mask_v]]
-end
-
-function unpacksv(mask_u,mask_v,x)
-    n = sum(mask_u)
-    u = fill(NaN,size(mask_u))
-    v = fill(NaN,size(mask_v))
-    u[mask_u] = x[1:n]
-    v[mask_v] = x[n+1:end]
-    return u,v
-end
 
 
 xt = packsv(mask_u,mask_v,u[:,:,end],v[:,:,end])
@@ -180,16 +216,6 @@ u3,v3 = unpacksv(mask_u,mask_v,xt)
 @show isequal(v3, v[:,:,end])
 
 
-function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
-    itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
-    itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
-    b = bearingobs[:]*pi/180
-#    lonobs = lonobs[:]
-#    latobs = latobs[:]
-
-    ur3 = [sin(b[i]) * itpu[lonobs[i],latobs[i]] - cos(b[i]) * itpv[lonobs[i],latobs[i]] for i = 1:length(b)];
-    return ur3[.!isnan.(ur3)]
-end
 
 
 
@@ -237,4 +263,3 @@ pcolor(prob[:,:,1]'); colorbar()
 
 figure(),plotvel(uf,vf; legendvec = 1)
 figure(),plotvel(ua,va; legendvec = 1)
-

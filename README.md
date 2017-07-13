@@ -5,7 +5,7 @@
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 0.6 of Julia on Linux.
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 0.6 of Julia (on Linux).
 * The version control tool git. Under Debian/Ubuntu this can be done by the following programs
 
 ```bash
