@@ -180,22 +180,33 @@ ncclose(gridname)
 
 # location of the observations
 
-sitelon1 = 9.84361
-sitelat1 = 44.04167
-siteorientation1 = 240
+# sitelon1 = 9.84361
+# sitelat1 = 44.04167
+# siteorientation1 = 240
 
-sitelon1 = 9.39
-sitelat1 = 42.99
+# # NC
+# sitelon2 = 8.11
+# sitelat2 = 43.95
+# siteorientation2 = 140
+
+
+# sitelon1 = 8.49
+# sitelat1 = 44.33
+# siteorientation1 = 150
+# # NC
+# sitelon2 = 8.11
+# sitelat2 = 43.95
+# siteorientation2 = 140
+
+
+sitelon1 = 9.397
+sitelat1 = 43
 siteorientation1 = -20
 
-sitelon2 = 10.46
-sitelat2 = 43.37
-siteorientation2 = 240
 
-# NC
-sitelon2 = 8.11
-sitelat2 = 43.95
-siteorientation2 = 140
+sitelon2 = 8.73
+sitelat2 = 42.57
+siteorientation2 = 0
 
 # location of the observations
 
@@ -215,8 +226,8 @@ latobs = [latobs1[:]; latobs2[:]]
 
 
 
-
-figure()
+clf()
+figure(1)
 
 contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
 
@@ -269,22 +280,28 @@ ua,va = unpacksv(mask_u,mask_v,xa)
 @show rms(xf,xt)
 @show rms(xa,xt)
 
-groupname = "mygroup"
+# groupname = "mygroup"
 
 # us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
 # vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
 
 
 # varvel = var(us,3) + var(vs,3)
+# varvel = varvel[:,:,1]
 # figure()
-# pcolor(varvel[:,:,1]')
+# varvel[mask[2:end-1,2:end-1] .== 0] = NaN
+# pcolor(lon[2:end-1,2:end-1],lat[2:end-1,2:end-1],varvel)
 # colorbar()
 
 # normvel = sqrt.(us.^2 + vs.^2);
 # prob = mean(normvel .> 0.2,3)
+# prob = prob[:,:,1]
+# prob[mask[2:end-1,2:end-1] .== 0] = NaN
 
 # figure()
-# pcolor(prob[:,:,1]'); colorbar()
+# pcolor(lon[2:end-1,2:end-1],lat[2:end-1,2:end-1],prob)
+# colorbar()
+
 
 # figure(),plotvel(uf,vf; legendvec = 1)
 # figure(),plotvel(ua,va; legendvec = 1)
