@@ -134,9 +134,7 @@ function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
 end
 
 """
-submit_results(groupname,
-               sitelon1,sitelat1,siteorientation1,
-               sitelon2,sitelat2,siteorientation2)
+submit_results(groupname,sitelon1,sitelat1,siteorientation1,sitelon2,sitelat2,siteorientation2)
 
 Submit the results
 """
@@ -145,11 +143,9 @@ function submit_results(groupname,
                         sitelon1,sitelat1,siteorientation1,
                         sitelon2,sitelat2,siteorientation2)
 
-    withenv("LD_LIBRARY_PATH" => "/home/abarth/.julia/v0.6/Conda/deps/usr/lib/") do
-        run(`/home/abarth/src/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`)
+    withenv("LD_LIBRARY_PATH" => "$(ENV["HOME"])/.julia/v0.6/Conda/deps/usr/lib/") do
+        run(`$(ENV["HOME"])/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`)
     end
-
-    #run(setenv(`/home/abarth/src/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`,["LD_LIBRARY_PATH=/home/abarth/.julia/v0.6/Conda/deps/usr/lib/","HOME=/home/abarth"]))
 end
 
 
