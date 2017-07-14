@@ -133,6 +133,25 @@ function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
     return ur[.!isnan.(ur)]
 end
 
+"""
+submit_results(groupname,
+               sitelon1,sitelat1,siteorientation1,
+               sitelon2,sitelat2,siteorientation2)
+
+Submit the results
+"""
+
+function submit_results(groupname,
+                        sitelon1,sitelat1,siteorientation1,
+                        sitelon2,sitelat2,siteorientation2)
+
+    withenv("LD_LIBRARY_PATH" => "/home/abarth/.julia/v0.6/Conda/deps/usr/lib/") do
+        run(`/home/abarth/src/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`)
+    end
+
+    #run(setenv(`/home/abarth/src/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`,["LD_LIBRARY_PATH=/home/abarth/.julia/v0.6/Conda/deps/usr/lib/","HOME=/home/abarth"]))
+end
+
 
 # location of the data
 # @__FILE__is the path of the current file assim_ens_hf.jl
@@ -164,12 +183,26 @@ ncclose(gridname)
 sitelon1 = 9.84361
 sitelat1 = 44.04167
 siteorientation1 = 240
-lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,20:50,siteorientation1 + (-60:5:60))
+
+sitelon1 = 9.39
+sitelat1 = 42.99
+siteorientation1 = -20
 
 sitelon2 = 10.46
 sitelat2 = 43.37
 siteorientation2 = 240
-lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,20:50,siteorientation2 + (-60:5:60))
+
+# NC
+sitelon2 = 8.11
+sitelat2 = 43.95
+siteorientation2 = 140
+
+# location of the observations
+
+ranges = 10:5:100
+
+lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,ranges,siteorientation1 + (-60:5:60))
+lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,ranges,siteorientation2 + (-60:5:60))
 
 bearingobs = bearingobs1[:]
 lonobs = lonobs1[:]
@@ -212,16 +245,7 @@ xf = mean(Xf,2)
 
 u3,v3 = unpacksv(mask_u,mask_v,xt)
 
-@show isequal(u3, u[:,:,end])
-@show isequal(v3, v[:,:,end])
-
-
-
-
-
-
 #yo = H * xt + alpha * randn(m) + beta * SE * randn(Neof)
-
 
 yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,end],v[:,:,end],lonobs,latobs,bearingobs)
 # add noise to yo
@@ -245,21 +269,22 @@ ua,va = unpacksv(mask_u,mask_v,xa)
 @show rms(xf,xt)
 @show rms(xa,xt)
 
+groupname = "mygroup"
 
-us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
-vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
+# us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
+# vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
 
 
-varvel = var(us,3) + var(vs,3)
-figure()
-pcolor(varvel[:,:,1]')
-colorbar()
+# varvel = var(us,3) + var(vs,3)
+# figure()
+# pcolor(varvel[:,:,1]')
+# colorbar()
 
-normvel = sqrt.(us.^2 + vs.^2);
-prob = mean(normvel .> 0.2,3)
+# normvel = sqrt.(us.^2 + vs.^2);
+# prob = mean(normvel .> 0.2,3)
 
-figure()
-pcolor(prob[:,:,1]'); colorbar()
+# figure()
+# pcolor(prob[:,:,1]'); colorbar()
 
-figure(),plotvel(uf,vf; legendvec = 1)
-figure(),plotvel(ua,va; legendvec = 1)
+# figure(),plotvel(uf,vf; legendvec = 1)
+# figure(),plotvel(ua,va; legendvec = 1)

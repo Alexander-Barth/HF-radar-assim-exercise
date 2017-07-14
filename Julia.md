@@ -74,6 +74,10 @@ Functions can be grouped into a module. To access the functions inside a module 
 using PyPlot
 ```
 
+## Scripts
+
+Julia code are save in files with the extensions `.jl`. To exercute all commands in a julia file use `include("file.jl")` where `file.jl` can be a relative file name (relative to the current directory) or an absolute file path.
+
 ## Documentation
 
 * Find documentation from the julia command line using "?", e.g. type "?mean" to find out about the `mean` function.
