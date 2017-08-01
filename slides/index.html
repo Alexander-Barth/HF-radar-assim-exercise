@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--PDF export:
+
+* set screen-resolution to 1024x768
+* open index.html in google-chrome
+* print to PDF
+https://github.com/gnab/remark/issues/50
+
+
+TODO:
+* movie with high hourly frequency
+* validation
+* Details about KF and EnKF
+* validation with 15 profiles
+* more satellite data
+
+
+
+* localization
+* strong coupling between different variables
+* model assumed to be too perfect
+* delicate balance between models
+
+ -->
+<html>
+  <head>
+    <title>Stochastic parametrization of model errors</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('Fonts/DroidSerif.ttf');
+      }
+
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('Fonts/DroidSerif-Bold.ttf');
+        font-weight: bold;
+      }
+
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('Fonts/DroidSerif-Italic.ttf');
+        font-style: italic;
+      }
+
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('Fonts/DroidSerif-BoldItalic.ttf');
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      @font-face{
+        font-family: 'Droid Sans';
+        src: url('Fonts/DroidSans.ttf');
+      }
+
+      @font-face{
+        font-family: 'Droid Sans';
+        src: url('Fonts/DroidSans-Bold.ttf');
+        font-weight: bold;
+      }
+
+      @font-face{
+        font-family: 'Droid Sans';
+        src: url('Fonts/DroidSans-Italic.ttf');
+        font-style: italic;
+      }
+
+      @font-face{
+        font-family: 'Droid Sans';
+        src: url('Fonts/DroidSans-BoldItalic.ttf');
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      @font-face{
+        font-family: 'Yanone Kaffeesatz';
+        src: url('Fonts/YanoneKaffeesatz-Regular.ttf');
+      }
+      @font-face{
+        font-family: 'Ubuntu Mono';
+        src: url('Fonts/UbuntuMono-Regular.ttf');
+      }
+
+/*    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);*/
+
+      body {
+          font-family: 'Droid Sans';
+      }
+
+      h1, h2, h3 {
+        /*font-family: 'Droid Serif';*/
+          font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+        color: rgb(0,56,201);
+      }
+
+      .center.middle h1 {
+        color: rgb(0,156,146);
+      }
+
+      .remark-code, .remark-inline-code {
+          font-family: 'Ubuntu Mono';
+      }
+
+      .titlepage p {
+          margin: 5px;
+      }
+
+      strong {
+        color: rgb(204,25,25);
+      }
+
+      img, video {
+          margin: 5px;
+          box-shadow: 3px 3px 5px 2px rgba(0,0,0,0.3);
+      }
+
+      img[alt^="logo"] {
+          height: 60px;
+          margin: 20px;
+      }
+
+      img[alt*="full:"] {
+          width: 700px;
+          float: right;
+      }
+
+      img[alt*="aneq:"] {
+          width: 500px;
+          float: right;
+      }
+
+      img[alt*="half:"] {
+          width: 350px;
+          float: right;
+      }
+
+      img[alt*="eof:"] {
+          width: 450px;
+          float: right;
+      }
+
+      img[alt*="nesting:"] {
+          width: 500px;
+          float: right;
+      }
+
+      img[alt*="twofig:"] {
+          width: 360px;
+      }
+
+      table {
+          border-collapse: collapse;
+          margin: auto;
+      }
+      th, td {
+          padding: 6px 13px;
+          border: 1px solid #ccc;
+      }
+      table tr:nth-child(2n) {
+          background-color: #f8f8f8;
+      }
+
+      img[alt*="right:"] {
+          width: 500px;
+          float: right;
+      }
+
+
+      .ms {
+          color: red;
+      }
+
+      .obs {
+          color: blue;
+      }
+
+      /* http://stackoverflow.com/questions/16311164/css-box-shadow-is-so-dark-when-printed*/
+      @media print {
+          img, video {
+              box-shadow: none;
+              -webkit-box-shadow: none;
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, titlepage
+
+# HF radar Assimilation exercice
+
+Alexander Barth<sup>1</sup>, Solène Jousset<sup>2</sup>,
+
+
+<sup>1</sup>University of Liege, Belgium
+<sup>2</sup>SHOM, France
+
+__ISSOR 2017__
+
+![logo](Fig/logo_ulg2.svg)
+![logo](Fig/GHER.svg)
+
+---
+class: middle
+
+# Outline
+
+---
+# Ensemble generation
+
+![half:](Fig/wind_ens.svg)
+* 88 ROMS model runs with perturbed:
+  * Boundary conditions
+  * Wind forcing
+  * Solar radiation
+* Ensemble run is the most costly step
+* For Ensemble OI: the ensemble is static taken from the time evolution of the model
+* Ensemble state from different times
+* Here: ensemble is from a free-running ensemble simulation
+
+---
+# Grid staggering
+
+![right:](Fig/arakawa2.svg)
+* ROMS uses the Arakawa C grid
+* $u$ and $v$ velocities are not defined at the same location
+
+
+---
+# Interpolation of velocity
+
+![right:](Fig/arakawa_C.svg)
+* Velocity is interpolated to a common location
+* Here: $u$ and $v$ are interpolated to the center of the grid
+* For the $u$ component:
+
+
+    </textarea>
+    <script src="remark-latest.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+<!--
+    <script src="MathJax-2.6-latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+-->
+
+    <script type="text/javascript">
+      var slideshow = remark.create();
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          },
+          TeX: { extensions: ["color.js"] }
+      });
+      MathJax.Hub.Configured();
+
+    </script>
+  </body>
+</html>
+
+<!--  LocalWords:  Slideshow nd matlab argo whos Attr Tobs latobs UTC
+ -->
+<!--  LocalWords:  lonobs timeobs datenum datevec datestr colorbar nc
+ -->
+<!--  LocalWords:  caxis Outliers outliers Bathymetry GEBCO ncdisp pn
+ -->
+<!--  LocalWords:  bathymetry ncread lon ndgrid pcolor divand Tmean
+ -->
+<!--  LocalWords:  Tanom len moddim interpn isnan repmat po lentime
+ -->
+<!--  LocalWords:  clf dpng yyyy png outlier OceanBrowser url rgb px
+ -->
+<!--  LocalWords:  Kaffeesatz titlepage img rgba CDI situ Sylvain OGS
+ -->
+<!--  LocalWords:  Watelet Troupin Alvera Azcarate Giorgio Santinelli
+ -->
+<!--  LocalWords:  Gerrit Hendriksen Alessandra Giorgetti Beckers EPS
+ -->
+<!--  LocalWords:  GHER Liège SOCIB Deltares Variational gridded SMHI
+ -->
+<!--  LocalWords:  variational NetCDF SeaDataNet EMODNET Metadata SVG
+ -->
+<!--  LocalWords:  OPeNDAP Centred WebM revalidation distrib EDMO OGC
+ -->
+<!--  LocalWords:  oceanbrowser abarth localhost webm AGPL matplotlib
+ -->
+<!--  LocalWords:  WMS WFS twofig td ccc webkit parametrization Luc
+ -->
+<!--  LocalWords:  Vandenbulcke seamod ro subgrid parametrizations Fi
+ -->
+<!--  LocalWords:  ROMS Ligurian CMEMS EOF Laplacian nabla frac mbox
+ -->
+<!--  LocalWords:  biharm discretization altimetry mathbf covariance
+ -->
+<!--  LocalWords:  Smagorinsky biharmonic stdfit parametrized src eof
+ -->
+
+
+<!--  LocalWords:  Yanone submesoscale aneq Kalman Céline Taymans vec
+ -->
+<!--  LocalWords:  Azcárate newcommand tindex renewcommand underbrace
+ -->
+<!--  LocalWords:  advection ij boldsymbol discretized pdf Eulerian
+ -->
+<!--  LocalWords:  rightarrow forcings Navier Stoques cdot NCEP jj
+ -->
+<!--  LocalWords:  alignat linearized ETKF SAR Envisat Karimova VIIRS
+ -->
+<!--  LocalWords:  ECMWF CMRE LOGMEC Borrione Paolo Oddo Aniello OOV
+ -->
+<!--  LocalWords:  Coelho LOV MooseT upscaling NEMO coef
+ -->
