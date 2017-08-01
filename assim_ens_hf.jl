@@ -171,7 +171,11 @@ lon_v = nc["lon_v"][:,:]
 lat_v = nc["lat_v"][:,:]
 lon = nc["lon_rho"][:,:]
 lat = nc["lat_rho"][:,:]
+# mask is just used for drawing the coastline
 mask = nc["mask_rho"][:,:]
+# mask_u/mask_v are true where a grid cell is a sea point (and zero where it is a land point)
+mask_u = nc["mask_u"][:,:] .== 1
+mask_v = nc["mask_v"][:,:] .== 1
 ncclose(gridname)
 
 # location of the observations
@@ -231,10 +235,6 @@ plot(sitelon1,sitelat1,"x")
 plot(lonobs1[:],latobs1[:],".")
 plot(sitelon2,sitelat2,"x")
 plot(lonobs2[:],latobs2[:],".")
-
-mask_u = .!isnan.(u[:,:,1]);
-mask_v = .!isnan.(v[:,:,1]);
-
 
 
 xt = packsv(mask_u,mask_v,u[:,:,end],v[:,:,end])
