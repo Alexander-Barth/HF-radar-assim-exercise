@@ -206,7 +206,7 @@ siteorientation2 = 0
 
 # location of the observations
 
-ranges = 10:5:100
+ranges = 5:5:100
 
 lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,ranges,siteorientation1 + (-60:5:60))
 lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,ranges,siteorientation2 + (-60:5:60))

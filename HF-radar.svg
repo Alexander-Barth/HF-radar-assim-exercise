@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="381.4278"
-   height="287.72006"
+   width="390"
+   height="290"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -48,18 +48,18 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#ffffff"
+     pagecolor="#7dc0ff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="0.34901961"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="252.96717"
+     inkscape:cx="130.48617"
      inkscape:cy="146.60624"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:snap-global="true"
+     inkscape:snap-global="false"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-grids="false"
      inkscape:window-width="1920"
@@ -89,7 +89,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -97,7 +97,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-198.13872,-147.93491)">
+     transform="translate(-198.13872,-145.65497)">
+    <path
+       style="fill:#c3ccc0;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="M 189.922,-2.2799377 C 215.68089,84.59318 283.34779,287.72006 283.34779,287.72006 l 106.65221,0 0,-289.9999977 z"
+       id="path3008"
+       inkscape:connector-curvature="0"
+       transform="translate(198.13872,147.93491)"
+       sodipodi:nodetypes="ccccc" />
     <path
        sodipodi:type="arc"
        style="fill:#3139ae;fill-opacity:1;stroke:#3139ae;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -229,13 +236,25 @@
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="459.76822"
-       y="394.74377"
+       x="218.26054"
+       y="249.70822"
        id="text5420"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5422"
-         x="459.76822"
-         y="394.74377"> α = β - 180°</tspan></text>
+         x="218.26054"
+         y="249.70822"> α = β - 180°</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="445.12103"
+       y="428.07883"
+       id="text3792"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3794"
+         x="445.12103"
+         y="428.07883"
+         style="font-size:16px;font-style:italic;-inkscape-font-specification:Sans Italic">sea  land</tspan></text>
   </g>
 </svg>

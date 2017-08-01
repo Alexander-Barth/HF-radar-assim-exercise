@@ -7,24 +7,10 @@
 https://github.com/gnab/remark/issues/50
 
 
-TODO:
-* movie with high hourly frequency
-* validation
-* Details about KF and EnKF
-* validation with 15 profiles
-* more satellite data
-
-
-
-* localization
-* strong coupling between different variables
-* model assumed to be too perfect
-* delicate balance between models
-
  -->
 <html>
   <head>
-    <title>Stochastic parametrization of model errors</title>
+    <title>HF radar assimilation exercice</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @font-face{
@@ -194,7 +180,7 @@ TODO:
 
 class: center, middle, titlepage
 
-# HF radar Assimilation exercice
+# HF radar assimilation exercice
 
 Alexander Barth<sup>1</sup>, Solène Jousset<sup>2</sup>,
 
@@ -207,10 +193,6 @@ __ISSOR 2017__
 ![logo](Fig/logo_ulg2.svg)
 ![logo](Fig/GHER.svg)
 
----
-class: middle
-
-# Outline
 
 ---
 # Ensemble generation
@@ -224,6 +206,7 @@ class: middle
 * For Ensemble OI: the ensemble is static taken from the time evolution of the model
 * Ensemble state from different times
 * Here: ensemble is from a free-running ensemble simulation
+* In total 528 ensemble members
 
 ---
 # Grid staggering
@@ -240,6 +223,24 @@ class: middle
 * Velocity is interpolated to a common location
 * Here: $u$ and $v$ are interpolated to the center of the grid
 * For the $u$ component:
+
+
+---
+# Exercises
+
+1. Compute the ensemble standard of the velocity vector as
+$$\sqrt{ var(u) + var(v)}$$
+Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the ensemble standard.
+2. What is the probablity that the speed (norm of the velocity vector) exceeds 20 cm/s ?
+Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the probability
+3. Simplified twin experiement:
+   * Let's assume that the last ensemble member is the reality (true current)
+   * The last ensemble member will be used to extract observations, but it will not be used during the analysis
+   * Assimilate radial observations of two HF radar sites
+   * Optimize the position of two HF radar sites. We assume that the field of view of the HF Radar 120 degrees but the orientation of the antenna can be choosen freely. The range of HF radar is fixed to 100 km with a radial resolution of 5 km.
+   * Validate the mean of the analysis ensemble with the true currents
+
+
 
 
     </textarea>
