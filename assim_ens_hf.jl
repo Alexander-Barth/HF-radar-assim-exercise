@@ -128,8 +128,13 @@ Interpolate and rotate the velocity vertors to compute the radial velcity `ur`.
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
     itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
     itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
-    b = bearingobs[:]*pi/180
-    ur = [sin(b[i]) * itpu[lonobs[i],latobs[i]] - cos(b[i]) * itpv[lonobs[i],latobs[i]] for i = 1:length(b)];
+
+    ur = zeros(size(lonobs))
+    for i = 1:length(lonobs)
+        direction = (bearingobs[i] + 180) * pi/180
+        ur[i] = sin(direction) * itpu[lonobs[i],latobs[i]] + cos(direction) * itpv[lonobs[i],latobs[i]]
+    end
+
     return ur[.!isnan.(ur)]
 end
 
@@ -180,9 +185,13 @@ ncclose(gridname)
 
 # location of the observations
 
-# sitelon1 = 9.84361
-# sitelat1 = 44.04167
-# siteorientation1 = 240
+sitelon1 = 9.84361
+sitelat1 = 44.04167
+siteorientation1 = 240
+
+sitelon2 = 10.46
+sitelat2 = 43.37
+siteorientation2 = 240
 
 # # NC
 # sitelon2 = 8.11
@@ -199,14 +208,14 @@ ncclose(gridname)
 # siteorientation2 = 140
 
 
-sitelon1 = 9.397
-sitelat1 = 43
-siteorientation1 = -20
+# sitelon1 = 9.397
+# sitelat1 = 43
+# siteorientation1 = -20
 
 
-sitelon2 = 8.73
-sitelat2 = 42.57
-siteorientation2 = 0
+# sitelon2 = 8.73
+# sitelat2 = 42.57
+# siteorientation2 = 0
 
 # location of the observations
 
