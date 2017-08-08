@@ -69,7 +69,7 @@ This create the folder `HF-radar-assim-caen`
 
 * [Quick introduction to Julia](Julia.md)
 
-* [Exercise questions](exercise.md)
+* [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-caen/slides/)
 
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
