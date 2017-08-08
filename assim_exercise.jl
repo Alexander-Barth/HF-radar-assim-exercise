@@ -127,16 +127,7 @@ Interpolate and rotate the velocity vertors to compute the radial velcity `ur`.
 Return only the radial velocity over sea.
 """
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
-    itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
-    itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
-
-    ur = zeros(size(lonobs))
-    for i = 1:length(lonobs)
-        direction = (bearingobs[i] + 180) * pi/180
-        ur[i] = sin(direction) * itpu[lonobs[i],latobs[i]] + cos(direction) * itpv[lonobs[i],latobs[i]]
-    end
-
-    return ur[.!isnan.(ur)]
+    error("Implement the observation operator")
 end
 
 """
@@ -212,87 +203,3 @@ latobs = [latobs1[:]; latobs2[:]]
 
 
 
-# clf()
-# figure(1)
-
-# contourf(lon,lat,mask,levels = [0.,0.5],colors = [[.5,.5,.5]])
-
-# plot(sitelon1,sitelat1,"x")
-# plot(lonobs1[:],latobs1[:],".")
-# plot(sitelon2,sitelat2,"x")
-# plot(lonobs2[:],latobs2[:],".")
-
-# the true state
-xt = packsv(mask_u,mask_v,u[:,:,end],v[:,:,end])
-
-# number of elements in the state vector
-n = sum(mask_u) + sum(mask_v)
-
-# Ensemble size
-Nens = size(u,3)-1
-
-# Matrix with all ensemble members in "packed" form
-Xf = zeros(n,Nens)
-for n = 1:Nens
-    Xf[:,n] = packsv(mask_u,mask_v,u[:,:,n],v[:,:,n])
-end
-
-# ensemble mean
-xf = mean(Xf,2)
-
-u3,v3 = unpacksv(mask_u,mask_v,xt)
-
-yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,end],v[:,:,end],lonobs,latobs,bearingobs)
-
-R = Diagonal(fill(0.2,size(yo)))
-
-# set the seed
-srand(12345)
-
-# add noise to yo
-yo = yo + sqrtm(R) * randn(size(yo))
-
-HXf = zeros(length(yo),size(u,3)-1)
-
-# apply the observation operator to every velocity field
-for i = 1:size(u,3)-1
-    HXf[:,i] = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,i],v[:,:,i],lonobs,latobs,bearingobs)
-end
-
-# apply the ETKF
-
-Xa,xa = ETKF_HXf(Xf,HXf,yo,R)
-
-# extract the velocity from the state vector
-uf,vf = unpacksv(mask_u,mask_v,xf)
-ua,va = unpacksv(mask_u,mask_v,xa)
-
-# compute the RMS errors
-@show rms(xf,xt)
-@show rms(xa,xt)
-
-# groupname = "mygroup"
-
-# us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
-# vs = (v[2:end-1,1:end-1,:] + v[2:end-1,2:end,:]) / 2.
-
-
-# varvel = var(us,3) + var(vs,3)
-# varvel = varvel[:,:,1]
-# figure()
-# varvel[mask[2:end-1,2:end-1] .== 0] = NaN
-# pcolor(lon[2:end-1,2:end-1],lat[2:end-1,2:end-1],varvel)
-# colorbar()
-
-# normvel = sqrt.(us.^2 + vs.^2);
-# prob = mean(normvel .> 0.2,3)
-# prob = prob[:,:,1]
-# prob[mask[2:end-1,2:end-1] .== 0] = NaN
-
-# figure()
-# pcolor(lon[2:end-1,2:end-1],lat[2:end-1,2:end-1],prob)
-# colorbar()
-
-
-# figure(),plotvel(uf,vf; legendvec = 1)
-# figure(),plotvel(ua,va; legendvec = 1)

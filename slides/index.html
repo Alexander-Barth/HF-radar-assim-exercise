@@ -195,6 +195,11 @@ __ISSOR 2017__
 
 
 ---
+# A quick introduction to Julia
+
+https://github.com/Alexander-Barth/HF-radar-assim-caen/blob/master/Julia.md
+
+---
 # Ensemble generation
 
 ![half:](Fig/wind_ens.svg)
@@ -233,21 +238,68 @@ __ISSOR 2017__
 
 
 ---
+# Observation operator
+
+
+* Implement the observation operator as the function `interp_radvel`
+* Interpolation is implementation in the package `Interpolations`
+* Assumes that the grid is aligned in the North-South and East-West directions (which is the case here)
+* Example of interpolating the component `us` at the location 8°N and 43°W
+```julia
+using Interpolations
+us = .... # surface current
+itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
+itpu[8,43]
+```
+
+* Suggestion: use an explicit loop for all observation locations
+
+---
+# Observation error covariance
+
+* Observation error covariance `R` is assumed to be a diagonal matrix with all diagonal elements equal to 0.2 (m²/s²).
+```julia
+R = Diagonal(fill(0.2,size(yo)))
+```
+
+* Observations are perturbed by adding random noise.
+```julia
+yo = yo + sqrtm(R) * randn(size(yo))
+```
+* Set the seed to make the exercise exactly reproducible across different computers.
+```julia
+srand(12345)
+```
+
+
+---
 # Exercises
 
-1. Compute the ensemble standard of the velocity vector as
+1. Compute the __ensemble standard of the velocity vector__ as
 $$\sqrt{ var(u) + var(v)}$$
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the ensemble standard.
-2. What is the probablity that the speed (norm of the velocity vector) exceeds 20 cm/s ?
+2. What is the __probablity__ that the speed (norm of the velocity vector) exceeds 20 cm/s ?
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the probability
-3. Simplified twin experiement:
+3. Simplified __twin experiement__:
    * Let's assume that the last ensemble member is the reality (true current)
    * The last ensemble member will be used to extract observations, but it will not be used during the analysis
    * Assimilate radial observations of two HF radar sites
-   * Optimize the position of two HF radar sites. We assume that the field of view of the HF Radar 120 degrees but the orientation of the antenna can be choosen freely. The range of HF radar is fixed to 100 km with a radial resolution of 5 km.
+   * Optimize the __position and orientation__ of two HF radar sites. We assume that the field of view of the HF Radar 120 degrees but the orientation of the antenna can be choosen freely. The range of HF radar is fixed to 100 km with a radial resolution of 5 km.
    * Validate the mean of the analysis ensemble with the true currents
 
 
+---
+# Submit results
+
+* Work in groups and choose group name
+* Submit your results using your group name and the the location and orientation of the 2 HF radar sites:
+```julia
+submit_results(groupname,sitelon1,sitelat1,siteorientation1,
+  sitelon2,sitelat2,siteorientation2)
+```
+* View how well you are doing: http://data-assimilation.net/scores/?game=Caen
+* You can run the function `submit_results` as many time as you want, but use always the same group name. Only the best result will appear.
+* Still make sure that your placed your HF radar sites on land...
 
 
     </textarea>
