@@ -10,7 +10,7 @@ https://github.com/gnab/remark/issues/50
  -->
 <html>
   <head>
-    <title>HF radar assimilation exercice</title>
+    <title>HF radar assimilation exercise</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @font-face{
@@ -180,7 +180,7 @@ https://github.com/gnab/remark/issues/50
 
 class: center, middle, titlepage
 
-# HF radar assimilation exercice
+# HF radar assimilation exercise
 
 Alexander Barth<sup>1</sup>, Solène Jousset<sup>2</sup>,
 
@@ -277,23 +277,26 @@ srand(12345)
 ---
 # Exercises
 
+* Work in groups
+
 1. Compute the __ensemble standard of the velocity vector__ as
 $$\sqrt{ var(u) + var(v)}$$
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the ensemble standard.
-2. What is the __probablity__ that the speed (norm of the velocity vector) exceeds 20 cm/s ?
+2. What is the __probability__ that the speed (norm of the velocity vector) exceeds 20 cm/s ?
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the probability
-3. Simplified __twin experiement__:
+3. Simplified __twin experiment__:
    * Let's assume that the last ensemble member is the reality (true current)
    * The last ensemble member will be used to extract observations, but it will not be used during the analysis
    * Assimilate radial observations of two HF radar sites
-   * Optimize the __position and orientation__ of two HF radar sites. We assume that the field of view of the HF Radar 120 degrees but the orientation of the antenna can be choosen freely. The range of HF radar is fixed to 100 km with a radial resolution of 5 km.
+   * Optimize the __position and orientation__ of two HF radar sites. We assume that the field of view of the HF Radar 120 degrees but the orientation of the antenna can be chosen freely. The range of HF radar is fixed to 100 km with a radial resolution of 5 km.
    * Validate the mean of the analysis ensemble with the true currents
 
 
 ---
 # Submit results
 
-* Work in groups and choose group name
+* Start by adapting the file `assim_exercise.jl` which includes the ETKF analysis scheme and several utility functions
+* Choose group name
 * Submit your results using your group name and the the location and orientation of the 2 HF radar sites:
 ```julia
 submit_results(groupname,sitelon1,sitelat1,siteorientation1,
@@ -376,11 +379,17 @@ submit_results(groupname,sitelon1,sitelat1,siteorientation1,
  -->
 <!--  LocalWords:  advection ij boldsymbol discretized pdf Eulerian
  -->
-<!--  LocalWords:  rightarrow forcings Navier Stoques cdot NCEP jj
+<!--  LocalWords:  rightarrow forcings Navier Stoques cdot NCEP jj jl
  -->
 <!--  LocalWords:  alignat linearized ETKF SAR Envisat Karimova VIIRS
  -->
 <!--  LocalWords:  ECMWF CMRE LOGMEC Borrione Paolo Oddo Aniello OOV
  -->
-<!--  LocalWords:  Coelho LOV MooseT upscaling NEMO coef
+<!--  LocalWords:  Coelho LOV MooseT upscaling NEMO coef Solène SHOM
+ -->
+<!--  LocalWords:  Jousset ISSOR Arakawa interp radvel julia itpu
+ -->
+<!--  LocalWords:  sqrtm randn srand sqrt assim groupname sitelon
+ -->
+<!--  LocalWords:  sitelat siteorientation
  -->
