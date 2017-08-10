@@ -244,7 +244,7 @@ https://github.com/Alexander-Barth/HF-radar-assim-caen/blob/master/Julia.md
 
 
 * Implement the observation operator as the function `interp_radvel`
-* Interpolation is implementation in the package `Interpolations`
+* Interpolation is implemented in the package `Interpolations`
 * Assumes that the grid is aligned in the North-South and East-West directions (which is the case here)
 * Example of interpolating the component `us` at the location 8°N and 43°W
 ```julia
@@ -282,7 +282,7 @@ srand(12345)
 1. Compute the __ensemble standard of the velocity vector__ as
 $$\sqrt{ var(u) + var(v)}$$
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the ensemble standard.
-2. What is the __probability__ that the speed (norm of the velocity vector) exceeds 20 cm/s ?
+2. What is the __probability__ that the speed (norm of the velocity vector) exceeds 20 cm/s assuming that the ensemble members are a sample of the model probability distribution function (pdf)?
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the probability
 3. Simplified __twin experiment__:
    * Let's assume that the last ensemble member is the reality (true current)
