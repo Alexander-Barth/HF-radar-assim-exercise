@@ -279,12 +279,16 @@ srand(12345)
 
 * Work in groups
 
-1. Compute the __ensemble standard of the velocity vector__ as
+1) Compute the __ensemble standard of the velocity vector__ as
 $$\sqrt{ var(u) + var(v)}$$
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the ensemble standard.
-2. What is the __probability__ that the speed (norm of the velocity vector) exceeds 20 cm/s assuming that the ensemble members are a sample of the model probability distribution function (pdf)?
+
+
+2) What is the __probability__ that the speed (norm of the velocity vector) exceeds 20 cm/s assuming that the ensemble members are a sample of the model probability distribution function (pdf)?
 Create a plot (x-axis is the longitude and y-axis is the latitude) and the color represents the probability
-3. Simplified __twin experiment__:
+
+---
+3) Simplified __twin experiment__:
    * Let's assume that the last ensemble member is the reality (true current)
    * The last ensemble member will be used to extract observations, but it will not be used during the analysis
    * Assimilate radial observations of two HF radar sites
@@ -305,6 +309,22 @@ submit_results(groupname,sitelon1,sitelat1,siteorientation1,
 * View how well you are doing: http://data-assimilation.net/scores/?game=Caen
 * You can run the function `submit_results` as many time as you want, but use always the same group name. Only the best result will appear.
 * Still make sure that your placed your HF radar sites on land...
+
+---
+# Submit results
+
+* Alternatively, load the script `submit_results.jl`
+
+```julia
+include("submit_results.jl");
+```
+
+Then
+```julia
+submit_results2("your group name",sitelon1,sitelat1,siteorientation1,
+   sitelon2,sitelat2,siteorientation2,rms(xa,xt))
+```
+
 
 
     </textarea>
