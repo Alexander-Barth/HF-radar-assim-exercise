@@ -271,6 +271,8 @@ ua,va = unpacksv(mask_u,mask_v,xa)
 @show rms(xf,xt)
 @show rms(xa,xt)
 
+rms_velocity = rms(xa,xt)
+
 # groupname = "mygroup"
 
 # us = (u[1:end-1,2:end-1,:] + u[2:end,2:end-1,:]) / 2.
