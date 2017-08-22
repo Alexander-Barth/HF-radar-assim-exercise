@@ -13,66 +13,9 @@ https://github.com/gnab/remark/issues/50
     <title>HF radar assimilation exercise</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
-      @font-face{
-        font-family: 'Droid Serif';
-        src: url('Fonts/DroidSerif.ttf');
-      }
-
-      @font-face{
-        font-family: 'Droid Serif';
-        src: url('Fonts/DroidSerif-Bold.ttf');
-        font-weight: bold;
-      }
-
-      @font-face{
-        font-family: 'Droid Serif';
-        src: url('Fonts/DroidSerif-Italic.ttf');
-        font-style: italic;
-      }
-
-      @font-face{
-        font-family: 'Droid Serif';
-        src: url('Fonts/DroidSerif-BoldItalic.ttf');
-        font-weight: bold;
-        font-style: italic;
-      }
-
-      @font-face{
-        font-family: 'Droid Sans';
-        src: url('Fonts/DroidSans.ttf');
-      }
-
-      @font-face{
-        font-family: 'Droid Sans';
-        src: url('Fonts/DroidSans-Bold.ttf');
-        font-weight: bold;
-      }
-
-      @font-face{
-        font-family: 'Droid Sans';
-        src: url('Fonts/DroidSans-Italic.ttf');
-        font-style: italic;
-      }
-
-      @font-face{
-        font-family: 'Droid Sans';
-        src: url('Fonts/DroidSans-BoldItalic.ttf');
-        font-weight: bold;
-        font-style: italic;
-      }
-
-      @font-face{
-        font-family: 'Yanone Kaffeesatz';
-        src: url('Fonts/YanoneKaffeesatz-Regular.ttf');
-      }
-      @font-face{
-        font-family: 'Ubuntu Mono';
-        src: url('Fonts/UbuntuMono-Regular.ttf');
-      }
-
-/*    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);*/
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
       body {
           font-family: 'Droid Sans';
@@ -272,6 +215,22 @@ yo = yo + sqrtm(R) * randn(size(yo))
 ```julia
 srand(12345)
 ```
+
+---
+# Data and code
+
+* Open a terminal
+* Copy the folder `/home/invites/data/ISSOR17/HF-radar-assim-caen` in your home directory (if not already present)
+```bash
+cp -R /home/invites/data/ISSOR17/HF-radar-assim-caen ~
+```
+* The tilde (~) means your home directory and the symbol is on same key as the digit 2 on a French keyboard
+* Enter the directory `HF-radar-assim-caen` and start julia by typing:
+```bash
+cd HF-radar-assim-caen
+julia
+```
+* Installed editors: gedit, emacs, vi
 
 
 ---
