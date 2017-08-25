@@ -167,7 +167,7 @@ https://github.com/Alexander-Barth/HF-radar-assim-caen/blob/master/Julia.md
 
 
 ---
-# Interpolation of velocity
+# Interpolation of velocity (for plotting)
 
 ![right:](Fig/arakawa_C.svg)
 * Velocity is interpolated to a common location
@@ -219,19 +219,15 @@ srand(12345)
 ---
 # Data and code
 
-* Open a terminal
-* Copy the folder `/home/invites/data/ISSOR17/HF-radar-assim-caen` in your home directory (if not already present)
-```bash
-cp -R /home/invites/data/ISSOR17/HF-radar-assim-caen ~
-```
-* The tilde (~) means your home directory and the symbol is on same key as the digit 2 on a French keyboard
+![eof:](Fig/terminal.png)
+* Open a terminal: Start Menu -> Emulateur de Terminal
 * Enter the directory `HF-radar-assim-caen` and start julia by typing:
 ```bash
 cd HF-radar-assim-caen
-julia
+julia06
 ```
-* Installed editors: gedit, emacs, vi
-
+* Installed editors: __gedit__, emacs, vi
+* gedit can be started from Start Menu -> Accessoires -> gedit
 
 ---
 # Exercises
@@ -304,6 +300,12 @@ export JULIA_PKGDIR=/usr/site/share/julia/site
 ```julia
 unshift!(Base.LOAD_CACHE_PATH,"/tmp/julia-cache")
 ```
+* The original code and data is in `/home/invites/data/ISSOR17/HF-radar-assim-caen`
+* To copy it in your home directory, use:
+```bash
+cp -R /home/invites/data/ISSOR17/HF-radar-assim-caen ~
+```
+* (The tilde (~) means your home directory and the symbol is on same key as the digit 2 on a French keyboard)
 * You can ignore warnings like "replacings docs for 'function name' in module Main"
 
 

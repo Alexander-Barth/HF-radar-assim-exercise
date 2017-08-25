@@ -42,6 +42,24 @@ a .== b  # returns [false,true,true]
 
 More information is available at https://docs.julialang.org/en/stable/manual/mathematical-operations/
 
+## Control flow
+
+* conditions
+```julia
+if x < y
+  # x is less than y
+else
+  # otherwise
+end
+```
+* loops
+```julia
+for n = 1:10
+    # show the values from 1 to 10
+    @show n
+end
+```
+
 ## Functions
 
 Function compute a value (or several values) based on their input arguments:
@@ -77,6 +95,13 @@ using PyPlot
 ## Scripts
 
 Julia code are save in files with the extensions `.jl`. To exercute all commands in a julia file use `include("file.jl")` where `file.jl` can be a relative file name (relative to the current directory) or an absolute file path.
+
+
+## Plotting
+
+* Plotting time series: `plot`
+* Plotting map of scalars: `pcolor` or `contourf`
+* Plotting map of vector: `quiver`
 
 ## Documentation
 
