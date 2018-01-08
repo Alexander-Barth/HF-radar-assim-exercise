@@ -17,8 +17,7 @@ sudo apt-get install git
 ```julia
 Pkg.clone("https://github.com/gher-ulg/divand.jl")
 Pkg.clone("https://github.com/Alexander-Barth/GeoMapping.jl")
-Pkg.clone("https://github.com/Alexander-Barth/NCDatasets.jl")
-Pkg.add("NetCDF")
+Pkg.add("NCDatasets")
 Pkg.add("PyPlot")
 Pkg.add("MAT")
 Pkg.add("IJulia")
