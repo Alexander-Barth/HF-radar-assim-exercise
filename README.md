@@ -6,16 +6,12 @@
 Required software:
 
 * Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0 of Julia (on Linux).
-* The version control tool git. Under Debian/Ubuntu this can be done by the following programs
-
-```bash
-sudo apt-get install git
-```
 
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
 ```julia
-Pkg.add("https://github.com/Alexander-Barth/GeoMapping.jl")
+using Pkg
+Pkg.add(PackageSpec(url="https://github.com/Alexander-Barth/GeoMapping.jl", rev="master"))
 Pkg.add("NCDatasets")
 Pkg.add("PyPlot")
 Pkg.add("Interpolations")
