@@ -11,7 +11,6 @@ using DataAssim
 """
 Compute the RMS difference between a and b
 """
-
 rms(a,b) = sqrt(mean((a - b).^2))
 
 
