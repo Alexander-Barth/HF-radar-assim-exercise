@@ -1,8 +1,12 @@
-using NetCDF
+using Random
+using LinearAlgebra
+using Statistics
+
+using NCDatasets
 using Interpolations
 using GeoMapping
 using PyPlot
-
+using DataAssim
 
 """
 Compute the RMS difference between a and b
@@ -11,43 +15,6 @@ Compute the RMS difference between a and b
 rms(a,b) = sqrt(mean((a - b).^2))
 
 
-"""
-Ensemble Transform Kalman Filter where Xf is the forecast ensemble, HXf the observed part of the forecast ensemble, y the observations and R the observation error covariance.
-"""
-function ETKF_HXf(Xf,HXf,y,R)
-
-
-    # ensemble size
-    N = size(Xf,2)
-
-    # number of observations
-    m = size(y,1)
-
-    xf = mean(Xf,2)[:,1]
-    Xfp = Xf - repmat(xf,1,N)
-
-    Hxf = mean(HXf,2)[:,1]
-    S = HXf - repmat(Hxf,1,N)
-
-    F = S*S' + (N-1) * R
-
-    # ETKF with square-root of invTTt (e.g. Hunt et al., 2007)
-
-    invR_S = R \ S
-    invTTt = (N-1) * eye(N) + S' * invR_S
-
-    e = eigfact(Symmetric(invTTt))
-    U_T = e.vectors
-    Sigma_T = Diagonal(e.values)
-
-    T = U_T * (sqrt.(Sigma_T) \ U_T')
-    Xap = sqrt(N-1) * Xfp * T
-    xa = xf + Xfp * (U_T * (inv(Sigma_T) * U_T' * (invR_S' * (y - Hxf))))
-
-    Xa = Xap + repmat(xa,1,N)
-
-    return Xa,xa
-end
 
 """
 x = packsv(mask_u,mask_v,u,v)
@@ -127,13 +94,13 @@ Interpolate and rotate the velocity vertors to compute the radial velcity `ur`.
 Return only the radial velocity over sea.
 """
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
-    itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
-    itpv = interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear()));
+    itpu = extrapolate(interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear())),NaN)
+    itpv = extrapolate(interpolate((lon_v[:,1],lat_v[1,:]),vs,Gridded(Linear())),NaN)
 
     ur = zeros(size(lonobs))
     for i = 1:length(lonobs)
         direction = (bearingobs[i] + 180) * pi/180
-        ur[i] = sin(direction) * itpu[lonobs[i],latobs[i]] + cos(direction) * itpv[lonobs[i],latobs[i]]
+        ur[i] = sin(direction) * itpu(lonobs[i],latobs[i]) + cos(direction) * itpv(lonobs[i],latobs[i])
     end
 
     return ur[.!isnan.(ur)]
@@ -161,28 +128,28 @@ datadir = joinpath(dirname(@__FILE__),"data")
 
 # load the NetCDF varibles u and v
 fname = joinpath(datadir,"ensemble_surface.nc")
-nc = NetCDF.open(fname)
-u = nc["u"][:,:,:]
-v = nc["v"][:,:,:]
-ncclose(fname)
+nc = Dataset(fname)
+u = nomissing(nc["u"][:,:,:],NaN)
+v = nomissing(nc["v"][:,:,:],NaN)
+close(nc)
 
 
 # load the model grid
 
 gridname = joinpath(datadir,"LS2v.nc")
-nc = NetCDF.open(gridname);
-lon_u = nc["lon_u"][:,:]
-lat_u = nc["lat_u"][:,:]
-lon_v = nc["lon_v"][:,:]
-lat_v = nc["lat_v"][:,:]
-lon = nc["lon_rho"][:,:]
-lat = nc["lat_rho"][:,:]
+nc = Dataset(gridname);
+lon_u = nomissing(nc["lon_u"][:,:])
+lat_u = nomissing(nc["lat_u"][:,:])
+lon_v = nomissing(nc["lon_v"][:,:])
+lat_v = nomissing(nc["lat_v"][:,:])
+lon = nomissing(nc["lon_rho"][:,:])
+lat = nomissing(nc["lat_rho"][:,:])
 # mask is just used for drawing the coastline
-mask = nc["mask_rho"][:,:]
+mask = nomissing(nc["mask_rho"][:,:])
 # mask_u/mask_v are true where a grid cell is a sea point (and zero where it is a land point)
-mask_u = nc["mask_u"][:,:] .== 1
-mask_v = nc["mask_v"][:,:] .== 1
-ncclose(gridname)
+mask_u = nomissing(nc["mask_u"][:,:]) .== 1
+mask_v = nomissing(nc["mask_v"][:,:]) .== 1
+close(nc)
 
 # location of the HF radar
 
@@ -198,8 +165,8 @@ siteorientation2 = 240
 
 ranges = 5:5:100
 
-lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,ranges,siteorientation1 + (-60:5:60))
-lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,ranges,siteorientation2 + (-60:5:60))
+lonobs1,latobs1,bearingobs1 = radarobsloc(sitelon1,sitelat1,ranges,siteorientation1 .+ (-60:5:60))
+lonobs2,latobs2,bearingobs2 = radarobsloc(sitelon2,sitelat2,ranges,siteorientation2 .+ (-60:5:60))
 
 bearingobs = bearingobs1[:]
 lonobs = lonobs1[:]
@@ -238,7 +205,7 @@ for n = 1:Nens
 end
 
 # ensemble mean
-xf = mean(Xf,2)
+xf = mean(Xf, dims = 2)
 
 u3,v3 = unpacksv(mask_u,mask_v,xt)
 
@@ -247,10 +214,10 @@ yo = interp_radvel(lon_u,lat_u,lon_v,lat_v,u[:,:,end],v[:,:,end],lonobs,latobs,b
 R = Diagonal(fill(0.2,size(yo)))
 
 # set the seed
-srand(12345)
+Random.seed!(12345)
 
 # add noise to yo
-yo = yo + sqrtm(R) * randn(size(yo))
+yo = yo + sqrt(R) * randn(size(yo))
 
 HXf = zeros(length(yo),size(u,3)-1)
 
@@ -261,7 +228,7 @@ end
 
 # apply the ETKF
 
-Xa,xa = ETKF_HXf(Xf,HXf,yo,R)
+Xa,xa = ETKF(Xf,HXf,yo,R,[])
 
 # extract the velocity from the state vector
 uf,vf = unpacksv(mask_u,mask_v,xf)
@@ -287,7 +254,7 @@ rms_velocity = rms(xa,xt)
 # colorbar()
 
 # normvel = sqrt.(us.^2 + vs.^2);
-# prob = mean(normvel .> 0.2,3)
+# prob = mean(normvel .> 0.2, dims = 3)
 # prob = prob[:,:,1]
 # prob[mask[2:end-1,2:end-1] .== 0] = NaN
 

@@ -2,7 +2,7 @@ using NetCDF
 using Interpolations
 using GeoMapping
 using PyPlot
-
+using DataAssim
 
 """
 Compute the RMS difference between a and b
@@ -11,6 +11,7 @@ Compute the RMS difference between a and b
 rms(a,b) = sqrt(mean((a - b).^2))
 
 
+#=
 """
 Ensemble Transform Kalman Filter where Xf is the forecast ensemble, HXf the observed part of the forecast ensemble, y the observations and R the observation error covariance.
 """
@@ -48,6 +49,7 @@ function ETKF_HXf(Xf,HXf,y,R)
 
     return Xa,xa
 end
+=#
 
 """
 x = packsv(mask_u,mask_v,u,v)

@@ -5,7 +5,7 @@
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 0.6 of Julia (on Linux).
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0 of Julia (on Linux).
 * The version control tool git. Under Debian/Ubuntu this can be done by the following programs
 
 ```bash
@@ -15,13 +15,12 @@ sudo apt-get install git
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
 ```julia
-Pkg.clone("https://github.com/gher-ulg/divand.jl")
-Pkg.clone("https://github.com/Alexander-Barth/GeoMapping.jl")
+Pkg.add("https://github.com/Alexander-Barth/GeoMapping.jl")
 Pkg.add("NCDatasets")
 Pkg.add("PyPlot")
-Pkg.add("MAT")
-Pkg.add("IJulia")
 Pkg.add("Interpolations")
+Pkg.add("DataAssim")
+Pkg.add("IJulia")
 ```
 
 * Editor with julia support. For example, install emacs and the file `julia-mode.el` as follows:
