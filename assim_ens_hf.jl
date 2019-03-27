@@ -116,7 +116,7 @@ function submit_results(groupname,
                         sitelon2,sitelat2,siteorientation2)
 
     withenv("LD_LIBRARY_PATH" => "$(ENV["HOME"])/.julia/v0.6/Conda/deps/usr/lib/") do
-        run(`$(ENV["HOME"])/HF-radar-assim-caen/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`)
+        run(`$(ENV["HOME"])/HF-radar-assim-exercise/bin/submit-result.exe $(groupname) $(sitelon1) $(sitelat1) $(siteorientation1) $(sitelon2) $(sitelat2) $(siteorientation2)`)
     end
 end
 

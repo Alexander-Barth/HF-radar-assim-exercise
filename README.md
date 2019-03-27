@@ -1,4 +1,4 @@
-# HF-radar-assim-caen
+# HF-radar-assim-exercise
 
 
 ## Setting-up your work environment
@@ -53,17 +53,17 @@ cd ~
 * Get the code for the exercise:
 
 ```bash
-git clone https://github.com/Alexander-Barth/HF-radar-assim-caen.git
+git clone https://github.com/Alexander-Barth/HF-radar-assim-exercise.git
 ```
 
-This create the folder `HF-radar-assim-caen`
+This create the folder `HF-radar-assim-exercise`
 
-* The data for the exercise is in the NetCDF files in the folder https://dox.ulg.ac.be/index.php/s/iZXK0toRe4wvyKs. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-caen/data`.
+* The data for the exercise is in the NetCDF files in the folder https://dox.ulg.ac.be/index.php/s/iZXK0toRe4wvyKs. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-exercise/data`.
 
 
 * [Quick introduction to Julia](Julia.md)
 
-* [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-caen/slides/)
+* [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
 
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
