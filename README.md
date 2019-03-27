@@ -40,19 +40,6 @@ cat >> ~/.emacs <<EOF
 EOF
 ```
 
-### Optionally
-
-* Install a desktop launcher and icon for julia
-
-```bash
-wget -O /tmp/julia.desktop https://raw.githubusercontent.com/JuliaLang/julia/e90f29db30f81f340d4f36669b27ac5a281e2a7f/contrib/julia.desktop
-desktop-file-install --dir=$HOME/.local/share/applications /tmp/julia.desktop
-mkdir -p ~/.local/share/icons/hicolor/scalable/apps/
-cd ~/.local/share/icons/hicolor/scalable/apps/
-wget https://raw.githubusercontent.com/JuliaLang/julia/30bf89f3d8e564b588b8e48993e92a551b384f2c/contrib/julia.svg
-cd ~
-```
-
 
 ## Exercise
 
