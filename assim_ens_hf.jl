@@ -2,11 +2,11 @@ using Random
 using LinearAlgebra
 using Statistics
 
+using DataAssim
 using NCDatasets
 using Interpolations
 using GeoMapping
 using PyPlot
-using DataAssim
 
 """
 Compute the RMS difference between a and b
@@ -89,7 +89,7 @@ end
 
 """
 ur = interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
-Interpolate and rotate the velocity vertors to compute the radial velcity `ur`. 
+Interpolate and rotate the velocity vertors to compute the radial velcity `ur`.
 Return only the radial velocity over sea.
 """
 function interp_radvel(lon_u,lat_u,lon_v,lat_v,us,vs,lonobs,latobs,bearingobs)
