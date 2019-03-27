@@ -131,7 +131,6 @@ Alexander Barth<sup>1</sup>, Solène Jousset<sup>2</sup>,
 <sup>1</sup>University of Liege, Belgium
 <sup>2</sup>SHOM, France
 
-__ISSOR 2017__
 
 http://tinyurl.com/assim-exercise
 
@@ -216,18 +215,6 @@ yo = yo + sqrtm(R) * randn(size(yo))
 srand(12345)
 ```
 
----
-# Data and code
-
-![eof:](Fig/terminal.png)
-* Open a terminal: Start Menu -> Emulateur de Terminal
-* Enter the directory `HF-radar-assim-exercise` and start julia by typing:
-```bash
-cd HF-radar-assim-exercise
-julia06
-```
-* Installed editors: __gedit__, emacs, vi
-* gedit can be started from Start Menu -> Accessoires -> gedit
 
 ---
 # Exercises
@@ -279,34 +266,6 @@ Then
 submit_results2("your group name",sitelon1,sitelat1,siteorientation1,
    sitelon2,sitelat2,siteorientation2,rms(xa,xt))
 ```
-
----
-# Troubleshooting
-
-* Before starting julia, you need to set
-
-```bash
-export JULIA_PKGDIR=/usr/site/share/julia/site
-```
-
-* Double-check if julia version 0.6 is started (not version 0.4.5 which is also installed)
-* You might need the full path:
-```bash
-/export/site/bin/julia06
-```
-
-* Permission problem, execute the following insite julia:
-
-```julia
-unshift!(Base.LOAD_CACHE_PATH,"/tmp/julia-cache")
-```
-* The original code and data is in `/home/invites/data/ISSOR17/HF-radar-assim-exercise`
-* To copy it in your home directory, use:
-```bash
-cp -R /home/invites/data/ISSOR17/HF-radar-assim-exercise ~
-```
-* (The tilde (~) means your home directory and the symbol is on same key as the digit 2 on a French keyboard)
-* You can ignore warnings like "replacings docs for 'function name' in module Main"
 
 
 
