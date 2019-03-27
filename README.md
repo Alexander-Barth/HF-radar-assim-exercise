@@ -19,7 +19,13 @@ Pkg.add("DataAssim")
 Pkg.add("IJulia")
 ```
 
-* Editor with julia support. For example, install emacs and the file `julia-mode.el` as follows:
+* Editor with julia support is recommended, such as:
+   * Juno (http://junolab.org/).
+   * Notepadd++ (https://github.com/JuliaEditorSupport/julia-NotepadPlusPlus)
+   * Emacs (https://github.com/JuliaEditorSupport/julia-emacs)
+   * vim (https://github.com/JuliaEditorSupport/julia-vim).
+
+For emacs on Linux, install the file `julia-mode.el` as follows:
 
 ```bash
 mkdir ~/site-lisp
