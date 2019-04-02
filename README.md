@@ -5,7 +5,7 @@
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0 of Julia (on Linux).
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0 and 1.1 of Julia (on Linux and Windows 10).
 
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
@@ -17,7 +17,12 @@ Pkg.add("PyPlot")
 Pkg.add("Interpolations")
 Pkg.add("DataAssim")
 Pkg.add("IJulia")
+using PyPlot
+using IJulia
+notebook()
 ```
+
+These commands will also install `matplotlib` and `jupyter`.
 
 * Editor with julia support is recommended, such as:
    * Juno (http://junolab.org/).
@@ -51,7 +56,7 @@ git clone https://github.com/Alexander-Barth/HF-radar-assim-exercise.git
 
 This create the folder `HF-radar-assim-exercise`
 
-* The data for the exercise is in the NetCDF files in the folder https://dox.ulg.ac.be/index.php/s/iZXK0toRe4wvyKs. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-exercise/data`.
+* The data for the exercise is in the NetCDF files in the folder https://dox.uliege.be/index.php/s/iZXK0toRe4wvyKs. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-exercise/data`.
 
 
 * [Quick introduction to Julia](Julia.md)
