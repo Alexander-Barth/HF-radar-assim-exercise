@@ -166,7 +166,7 @@ https://github.com/Alexander-Barth/HF-radar-assim-exercise/blob/master/Julia.md
 
 
 ---
-# Interpolation of velocity (for plotting)
+# Interpolation of velocity
 
 ![right:](Fig/arakawa_C.svg)
 * Velocity is interpolated to a common location
@@ -185,25 +185,24 @@ https://github.com/Alexander-Barth/HF-radar-assim-exercise/blob/master/Julia.md
 # Observation operator
 
 
-* Implement the observation operator as the function `interp_radvel`
-* Interpolation is implemented in the package `Interpolations`
+* Observation operator is implemented as the function `interp_radvel`
+* Interpolation used the package `Interpolations`
 * Assumes that the grid is aligned in the North-South and East-West directions (which is the case here)
 * Example of interpolating the component `us` at the location 8°N and 43°W
 ```julia
 using Interpolations
 us = .... # surface current
-itpu = interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear()));
-itpu[8,43]
+itpu = extrapolate(interpolate((lon_u[:,1],lat_u[1,:]),us,Gridded(Linear())),
+                   NaN);
+itpu(8,43) # value at the location longitude = 8 and latitude = 43
 ```
-
-* Suggestion: use an explicit loop for all observation locations
 
 ---
 # Observation error covariance
 
-* Observation error covariance `R` is assumed to be a diagonal matrix with all diagonal elements equal to 0.2 (m²/s²).
+* Observation error covariance `R` is assumed to be a diagonal matrix with all diagonal elements equal to 0.01 (m²/s²).
 ```julia
-R = Diagonal(fill(0.2,size(yo)))
+R = Diagonal(fill(0.01,size(yo)))
 ```
 
 * Observations are perturbed by adding random noise.
@@ -241,34 +240,31 @@ Create a plot (x-axis is the longitude and y-axis is the latitude) and the color
 ---
 # Submit results
 
-* Start by adapting the file `assim_exercise.jl` which includes the ETKF analysis scheme and several utility functions
-* Choose group name
+* Start by adapting the file `assim_exercise_start.ipynb` which includes several utility functions
+* Choose group name (variable `groupname`, please do not use special characters like accents)
 * Submit your results using your group name and the the location and orientation of the 2 HF radar sites:
 ```julia
 submit_results(groupname,sitelon1,sitelat1,siteorientation1,
   sitelon2,sitelat2,siteorientation2)
 ```
-* View how well you are doing: http://data-assimilation.net/scores/?game=Caen
+* View how well you are doing: http://data-assimilation.net/scores/?game=Bilbao
 * You can run the function `submit_results` as many time as you want, but use always the same group name. Only the best result will appear.
 * Still make sure that your placed your HF radar sites on land...
 
+
+
+
 ---
-# Submit results
+# Useful functions
 
-* Alternatively, load the script `submit_results.jl`
-
-```julia
-include("submit_results.jl");
-```
-
-Then
-```julia
-submit_results2("your group name",sitelon1,sitelat1,siteorientation1,
-   sitelon2,sitelat2,siteorientation2,rms(xa,xt))
-```
-
-
-
+* __`mean`__ and __`var`__ for the mean and variance (module `Statistics`)
+* __`plot`__, __`pcolor`__ and __`scatter`__ for plotting 1D, 2D or unstructed data (module `PyPlot`)
+* `sin` and `cos` are the trigonometric function (built-in)
+* __element-wise operations have always a dot (`.`)__, for example `.![true,false]` returns `[false,true]` or
+`sin.([0,pi/2])` returns `[0.0, 1.0]`
+* type __`?mean`__ for more information about the function `mean` (likewise for other functions)
+* indices start at 1
+* range of indices are written as `1:10` (and the upper bound is inclusive)
 
 
 
