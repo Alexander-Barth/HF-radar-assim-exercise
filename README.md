@@ -21,8 +21,8 @@ using PyPlot
 using IJulia
 notebook()
 ```
-
 These commands will also install `matplotlib` and `jupyter`.
+Confirm the installation of `jupyter` with conda.
 
 * Editor with julia support is recommended, such as:
    * Juno (http://junolab.org/).
