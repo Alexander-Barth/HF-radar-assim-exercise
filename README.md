@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Alexander-Barth/HF-radar-assim-exercise.svg?branch=master)](https://travis-ci.org/Alexander-Barth/HF-radar-assim-exercise)
+
+
 # HF-radar-assim-exercise
 
 
@@ -55,9 +58,6 @@ git clone https://github.com/Alexander-Barth/HF-radar-assim-exercise.git
 ```
 
 This create the folder `HF-radar-assim-exercise`
-
-* The data for the exercise is in the NetCDF files in the folder https://dox.uliege.be/index.php/s/iZXK0toRe4wvyKs. Download all the NetCDF files place them in the sub-directory `HF-radar-assim-exercise/data`.
-
 
 * [Quick introduction to Julia](Julia.md)
 
