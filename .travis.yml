@@ -30,6 +30,7 @@ install:
 script: # the default script is equivalent to the following
   - echo $PATH
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
   - julia --project --eval 'using Pkg; Pkg.instantiate();'
   - julia --project --eval 'using Pkg; Pkg.status();'
   - jupyter kernelspec list
