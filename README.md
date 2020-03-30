@@ -3,6 +3,11 @@
 
 # HF-radar-assim-exercise
 
+## Using Binder
+
+Click on the "launch binder" icon to start the notebooks. Setting-up the working environement on the binder service can take a couple of minutes. Binder will automatically shut down user sessions that have more than 10 minutes of inactivity.
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Alexander-Barth/HF-radar-assim-exercise/master?filepath=assim_exercise.ipynb)
 
 ## Setting-up your work environment
 
