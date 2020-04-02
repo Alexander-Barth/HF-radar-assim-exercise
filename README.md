@@ -13,7 +13,7 @@ Click on the "launch binder" icon to start the notebooks. Setting-up the working
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10).
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10) and Mac OS should work too.
 
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
@@ -31,28 +31,6 @@ notebook()
 ```
 These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda.
-
-* Editor with julia support is recommended, such as:
-   * Juno (http://junolab.org/).
-   * Notepadd++ (https://github.com/JuliaEditorSupport/julia-NotepadPlusPlus)
-   * Emacs (https://github.com/JuliaEditorSupport/julia-emacs)
-   * vim (https://github.com/JuliaEditorSupport/julia-vim).
-
-For emacs on Linux, install the file `julia-mode.el` as follows:
-
-```bash
-mkdir ~/site-lisp
-cd ~/site-lisp
-wget https://raw.githubusercontent.com/JuliaLang/julia-emacs/master/julia-mode.el
-cat >> ~/.emacs <<EOF
-;; Add a local lisp folder to your load-path
-(setq load-path (append load-path (list "~/site-lisp")))
-(require 'julia-mode)
-(setq auto-mode-alist (append '(("\\.jl$" . julia-mode)) auto-mode-alist))
-
-EOF
-```
-
 
 ## Exercise
 
