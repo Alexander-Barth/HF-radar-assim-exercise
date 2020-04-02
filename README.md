@@ -13,7 +13,7 @@ Click on the "launch binder" icon to start the notebooks. Setting-up the working
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0 and 1.3 of Julia (on Linux and Windows 10).
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the version 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10).
 
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
