@@ -34,7 +34,7 @@ Confirm the installation of `jupyter` with conda.
 
 ## Exercise
 
-* Get the code for the exercise:
+* Get the code for the exercise by extract the [zip file](https://github.com/Alexander-Barth/HF-radar-assim-exercise/archive/master.zip) or by using git:
 
 ```bash
 git clone https://github.com/Alexander-Barth/HF-radar-assim-exercise.git
