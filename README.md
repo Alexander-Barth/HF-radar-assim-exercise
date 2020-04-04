@@ -5,7 +5,8 @@
 
 ## Using Binder
 
-Click on the "launch binder" icon to start the notebooks. Setting-up the working environement on the binder service can take a couple of minutes. Binder will automatically shut down user sessions that have more than 10 minutes of inactivity.
+Click on the "launch binder" icon to start the notebooks. Setting-up the working environement on the binder service can take a couple of minutes. Binder will automatically shut down user sessions that have more than 10 minutes of inactivity. 
+
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Alexander-Barth/HF-radar-assim-exercise/master?filepath=assim_exercise.ipynb)
 
@@ -13,7 +14,8 @@ Click on the "launch binder" icon to start the notebooks. Setting-up the working
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10) and Mac OS should work too.
+* Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
+[is no longer support by Mircosoft](https://support.microsoft.com/en-us/help/4057281/windows-7-support-ended-on-january-14-2020) and is also no longer supported by Julia. 
 
 * Some Julia packages, which can be installed with these commands once you started Julia:
 
