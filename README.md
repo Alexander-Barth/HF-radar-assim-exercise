@@ -34,6 +34,8 @@ notebook()
 These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 
+If for some reason, the installation fails and the problem cannot be resolved, one can try to use binder (see above) as an alternative.
+
 ## Exercise
 
 * Get the code for the exercise by extract the [zip file](https://github.com/Alexander-Barth/HF-radar-assim-exercise/archive/master.zip) or by using git:
