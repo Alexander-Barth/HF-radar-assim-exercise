@@ -238,23 +238,6 @@ Create a plot (x-axis is the longitude and y-axis is the latitude) and the color
 
 
 ---
-# Submit results
-
-* Follow [the link](https://raw.githubusercontent.com/Alexander-Barth/HF-radar-assim-exercise/master/assim_exercise.ipynb) (or https://tinyurl.com/assim-notebook) and then choose File->Save in your web-browser as with the file name `assim_exercise.ipynb`
-* Choose group name (variable `groupname`, please do not use special characters like accents)
-* Submit your results using your group name and the the location and orientation of the 2 HF radar sites:
-```julia
-submit_results(groupname,sitelon1,sitelat1,siteorientation1,
-  sitelon2,sitelat2,siteorientation2)
-```
-* View how well you are doing: http://data-assimilation.net/scores/?game=OGCB2020
-* You can run the function `submit_results` as many time as you want, but use always the same group name. Only the best result will appear.
-* Still make sure that your placed your HF radar sites on land...
-
-
-
-
----
 # Useful functions
 
 * __`mean`__ and __`var`__ for the mean and variance (module `Statistics`)
@@ -268,12 +251,48 @@ submit_results(groupname,sitelon1,sitelat1,siteorientation1,
 
 
 ---
-# Installing the software
+# Using Binder
+
+* Binder is a web service to run notebooks on a server
+* The exercise can be made using Binder by clicking on the following icons:
+   * exercise [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Alexander-Barth/HF-radar-assim-exercise/nb?filepath=assim_exercise.ipynb)
+   * solution of the exercise [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Alexander-Barth/HF-radar-assim-exercise/nb?filepath=assim_exercise_SOLUTION.ipynb)
+
+* Setting-up the working environement on the binder service can take a couple of minutes.
+
+* __Binder will automatically shut down user sessions that have more than 10 minutes of inactivity and you will lose your session__.
+
+* Use the `File` 🠖 `Download as` 🠖 `Notebook` to save your work. You can also use `File` 🠖 `Open` and click on the right `Upload` button to upload as saved notebook file.
 
 
+---
+# Installing the software on your laptop
+
+* Instead of using Binder the notebooks can also be run on your laptop
+* In this case follow the instructions here
 https://github.com/Alexander-Barth/HF-radar-assim-exercise#setting-up-your-work-environment
 
+* Follow [the link](https://raw.githubusercontent.com/Alexander-Barth/HF-radar-assim-exercise/master/assim_exercise.ipynb) (or https://tinyurl.com/assim-notebook) and then choose `File` 🠖 `Save` in your web-browser as with the file name `assim_exercise.ipynb`
 
+
+---
+# Submit results
+
+* Choose group name (variable `groupname`, please do not use special characters like accents)
+* Submit your results using your group name and the the location and orientation of the 2 HF radar sites:
+```julia
+submit_results(groupname,sitelon1,sitelat1,siteorientation1,
+  sitelon2,sitelat2,siteorientation2)
+```
+* View how well you are doing: http://data-assimilation.net/scores/?game=OGCB2020
+* You can run the function `submit_results` as many time as you want, but use always the same group name. Only the best result will appear.
+* Still make sure that your placed your HF radar sites on land...
+
+
+
+
+    </textarea>
+<!--
 ---
 # Virtual machine
 
@@ -285,7 +304,7 @@ https://github.com/Alexander-Barth/HF-radar-assim-exercise#setting-up-your-work-
 * On some machines you need to enable virtualization in the BIOS
 
 
-    </textarea>
+-->
     <script src="remark-latest.min.js" type="text/javascript"></script>
 
     <script type="text/javascript"
