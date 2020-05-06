@@ -14,10 +14,10 @@ Click on the "launch binder" icon to start the notebooks. Setting-up the working
 
 Required software:
 
-* Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
-[is no longer supported by Mircosoft](https://support.microsoft.com/en-us/help/4057281/windows-7-support-ended-on-january-14-2020) and is also no longer supported by Julia. 
+* You need to install Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.0, 1.3 and 1.4 of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
+[is no longer support by Mircosoft](https://support.microsoft.com/en-us/help/4057281/windows-7-support-ended-on-january-14-2020) and is also no longer supported by Julia. 
 
-* Some Julia packages are required, which can be installed with these commands once you started Julia:
+* In addition, you need to install some Julia packages. Once you start julia, you need to type (or better copy-paste) these commands:
 
 ```julia
 using Pkg
@@ -32,7 +32,9 @@ using IJulia
 notebook()
 ```
 These commands will also install `matplotlib` and `jupyter`.
-Confirm the installation of `jupyter` with conda.
+Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
+
+If for some reason, the installation fails and the problem cannot be resolved, one can try to use binder (see above) as an alternative.
 
 ## Exercise
 
