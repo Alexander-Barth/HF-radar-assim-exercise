@@ -7,7 +7,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     export PATH="/Users/runner/Library/Python/3.8/bin:$PATH"
     brew install gnu-sed coreutils
-    export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
 # necessary for Windows
@@ -32,6 +33,7 @@ echo $PATH
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user
 #python3 -m pip install --user --use-feature=2020-resolver --use-feature=fast-deps  matplotlib jupyter
+python3 -m pip install pygments==2.4.1
 python3 -m pip install matplotlib jupyter
 
 julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
