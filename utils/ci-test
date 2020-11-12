@@ -6,16 +6,22 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     export PATH="/Users/runner/Library/Python/3.8/bin:$PATH"
-    brew install gnu-sed
+    brew install gnu-sed coreutils
     export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
+
+if ! command -v python3 &> /dev/null; then
+    echo "python3 could not be found"
+    alias python3=python
+fi
+
+alias
 
 export PATH="$HOME/.local/bin:$PATH"
 
 sed --version
-python --version
+cut --version
 python3 --version
-which python
 which python3
 
 echo $PATH
@@ -28,13 +34,16 @@ python3 -m pip install --user --use-feature=2020-resolver --use-feature=fast-dep
 julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
 julia --project --eval 'using Pkg; Pkg.instantiate();'
 julia --project --eval 'using Pkg; Pkg.status();'
-jupyter kernelspec list
+python3 -m jupyter kernelspec
 
 JULIA_VERSION=$(julia --version | cut --delimiter=' ' --field=3);
 JULIA_VERSION_XY=$(echo $JULIA_VERSION | cut  --delimiter='.' --field=1,2);
+
+echo JULIA_VERSION $JULIA_VERSION $JULIA_VERSION_XY
+
 for i in *.ipynb; do
    echo $i $JULIA_VERSION;
    sed --regexp-extended --in-place "s/julia-1.[0-9]/julia-$JULIA_VERSION_XY/g" "$i";
    sed --regexp-extended --in-place "s/Julia 1.[0-9].[0-9]/Julia $JULIA_VERSION/g" "$i";
-   jupyter nbconvert --to html --execute --ExecutePreprocessor.timeout=360 "$i";
+   python3 -m nbconvert --to html --execute --ExecutePreprocessor.timeout=360 "$i";
 done
