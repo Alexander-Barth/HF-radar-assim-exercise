@@ -13,12 +13,13 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 sed --version
+python --version
+python3 --version
+which python
+which python3
+
 echo $PATH
-if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-julia --project --eval 'using Pkg; Pkg.instantiate();'
-julia --project --eval 'using Pkg; Pkg.status();'
-julia --project --eval 'using Pkg; Pkg.add(PackageSpec(name="DIVAnd", rev="master"));'
-python3 -m jupyter kernelspec list
+
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user
