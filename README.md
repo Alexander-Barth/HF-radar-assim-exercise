@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Alexander-Barth/HF-radar-assim-exercise.svg?branch=master)](https://travis-ci.org/Alexander-Barth/HF-radar-assim-exercise)
+[![Build Status](https://github.com/Alexander-Barth/HF-radar-assim-exercise/workflows/CI/badge.svg)](https://github.com/Alexander-Barth/HF-radar-assim-exercise/actions)
 
 
 # HF-radar-assim-exercise

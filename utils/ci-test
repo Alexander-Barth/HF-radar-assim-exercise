@@ -23,18 +23,19 @@ fi
 alias
 
 export PATH="$HOME/.local/bin:$PATH"
+echo $PATH
 
 sed --version
 cut --version
 python3 --version
 
-echo $PATH
-
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user
-#python3 -m pip install --user --use-feature=2020-resolver --use-feature=fast-deps  matplotlib jupyter
-python3 -m pip install pygments==2.4.1
-python3 -m pip install matplotlib jupyter
+python3 -m pip install --user --use-feature=2020-resolver  matplotlib jupyter
+# AssertionError: wrong color format 'var(--jp-mirror-editor-variable-color)'
+# nbconvert 6.0.7 requires pygments>=2.4.1, but you'll have pygments 2.2.0 which is incompatible.
+#python3 -m pip install pygments==2.4.1
+#python3 -m pip install matplotlib jupyter
 
 julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
 julia --project --eval 'using Pkg; Pkg.instantiate();'
