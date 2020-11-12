@@ -10,9 +10,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
 
+# necessary for Windows
 if ! command -v python3 &> /dev/null; then
     echo "python3 could not be found"
-    alias python3=python
+
+    function python3() {
+       python "$@"
+    }
 fi
 
 alias
@@ -22,19 +26,18 @@ export PATH="$HOME/.local/bin:$PATH"
 sed --version
 cut --version
 python3 --version
-which python3
 
 echo $PATH
 
-
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user
-python3 -m pip install --user --use-feature=2020-resolver --use-feature=fast-deps  matplotlib jupyter
+#python3 -m pip install --user --use-feature=2020-resolver --use-feature=fast-deps  matplotlib jupyter
+python3 -m pip install matplotlib jupyter
 
 julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
 julia --project --eval 'using Pkg; Pkg.instantiate();'
 julia --project --eval 'using Pkg; Pkg.status();'
-python3 -m jupyter kernelspec
+python3 -m jupyter kernelspec list
 
 JULIA_VERSION=$(julia --version | cut --delimiter=' ' --field=3);
 JULIA_VERSION_XY=$(echo $JULIA_VERSION | cut  --delimiter='.' --field=1,2);
