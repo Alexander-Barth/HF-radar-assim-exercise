@@ -35,6 +35,7 @@ These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 
 If for some reason, the installation fails and the problem cannot be resolved, one can try to use binder (see above) as an alternative.
+You might also want to have a look at the page [installing julia](https://github.com/gher-ulg/Documentation/wiki/Installing-Julia).
 
 ## Exercise
 
