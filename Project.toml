@@ -1,5 +1,5 @@
 [compat]
-julia = "~1.5"
+julia = "~1.6"
 
 [deps]
 DataAssim = "cf87cc76-4620-5dad-9f0a-7411b2d39d18"
