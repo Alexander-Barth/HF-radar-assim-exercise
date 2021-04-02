@@ -26,5 +26,5 @@ for i in *.ipynb; do
    echo $i $JULIA_VERSION;
    sed --regexp-extended --in-place "s/julia-1.[0-9]/julia-$JULIA_VERSION_XY/g" "$i";
    sed --regexp-extended --in-place "s/Julia 1.[0-9].[0-9]/Julia $JULIA_VERSION/g" "$i";
-   python3 -m nbconvert --to html --execute --ExecutePreprocessor.timeout=360 "$i";
+   python3 -m nbconvert --to html --execute --ExecutePreprocessor.timeout=500 "$i";
 done
