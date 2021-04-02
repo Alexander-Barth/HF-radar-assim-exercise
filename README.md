@@ -14,7 +14,7 @@ Click on the "launch binder" icon to start the notebooks. Setting-up the working
 
 Required software:
 
-* You need to install Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.4 and 1.5 of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
+* You need to install Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.5 and 1.6 of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
 [is no longer support by Mircosoft](https://support.microsoft.com/en-us/help/4057281/windows-7-support-ended-on-january-14-2020) and is also no longer supported by Julia. 
 
 * In addition, you need to install some Julia packages. Once you start julia, you need to type (or better copy-paste) these commands:
@@ -35,6 +35,7 @@ These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 
 If for some reason, the installation fails and the problem cannot be resolved, one can try to use binder (see above) as an alternative.
+More information about the installation is available [here](https://github.com/gher-ulg/Documentation/wiki/Installing-Julia).
 
 ## Exercise
 
@@ -49,6 +50,8 @@ This create the folder `HF-radar-assim-exercise`
 * [Quick introduction to Julia](Julia.md)
 
 * [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
+
+
 
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
