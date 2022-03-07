@@ -24,6 +24,8 @@ using PyPlot
 using IJulia
 notebook()
 ```
+
+For Windows, please have a look here on how to use copy-paste in the [Windows terminal](https://bonkersabouttech.com/how-to-copy-and-paste-in-cmd/).
 These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 
