@@ -28,6 +28,7 @@ notebook()
 For Windows, please have a look here on how to use copy-paste in the [Windows terminal](https://bonkersabouttech.com/how-to-copy-and-paste-in-cmd/).
 These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
+On some older laptops, some steps can take quite a long time. It is not adviced to interrupt the installation process.
 
 If for some reason, the installation fails and the problem cannot be resolved, one can try to use Binder (see below) as an alternative.
 More information about the installation is available [here](https://github.com/gher-ulg/Documentation/wiki/Installing-Julia).
