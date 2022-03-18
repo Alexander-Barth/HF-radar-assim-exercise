@@ -202,15 +202,17 @@ itpu(8,43) # value at the location longitude = 8 and latitude = 43
 
 * Observation error covariance `R` is assumed to be a diagonal matrix with all diagonal elements equal to 0.01 (m²/s²).
 ```julia
+using LinearAlgebra
 R = Diagonal(fill(0.01,size(yo)))
 ```
 
 * Observations are perturbed by adding random noise.
 ```julia
-yo = yo + sqrtm(R) * randn(size(yo))
+yo = yo + sqrt(R) * randn(size(yo))
 ```
 * Set the seed to make the exercise exactly reproducible across different computers.
 ```julia
+using Random
 srand(12345)
 ```
 
