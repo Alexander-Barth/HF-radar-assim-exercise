@@ -92,6 +92,21 @@ Functions can be grouped into a module. To access the functions inside a module 
 using PyPlot
 ```
 
+Installing a package:
+
+```julia
+using Pkg
+Pkg.add("PyPlot")
+```
+
+Instantiating an package environement (specified with a `Package.toml` file):
+
+```julia
+using Pkg;
+Pkg.instantiate()
+```
+
+
 ## Scripts
 
 Julia code are save in files with the extensions `.jl`. To exercute all commands in a julia file use `include("file.jl")` where `file.jl` can be a relative file name (relative to the current directory) or an absolute file path.
