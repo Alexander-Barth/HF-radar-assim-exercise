@@ -20,7 +20,13 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
-echo $PATH
+
+# for windows:
+# update version if necessary
+export PATH="$HOME/AppData/Roaming/Python/Python39/Scripts:$PATH"
+
+echo "Env. variable HOME is: $HOME"
+echo "Env. variable PATH is: $PATH"
 
 sed --version
 cut --version
