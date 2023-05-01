@@ -5,11 +5,6 @@ source "${BASH_SOURCE%/*}/ci-env"
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user
 
-#ValueError: No template sub-directory with name 'lab' found in the following paths:
-#python3 -m pip install --user --use-feature=2020-resolver  matplotlib jupyter
-# AssertionError: wrong color format 'var(--jp-mirror-editor-variable-color)'
-# nbconvert 6.0.7 requires pygments>=2.4.1, but you'll have pygments 2.2.0 which is incompatible.
-python3 -m pip install pygments==2.4.1
 python3 -m pip install matplotlib jupyter
 
 julia --eval 'using Pkg; pkg"dev https://github.com/Alexander-Barth/GeoMapping.jl"'
