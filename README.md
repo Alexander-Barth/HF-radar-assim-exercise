@@ -53,7 +53,7 @@ This create the folder `HF-radar-assim-exercise`
 * [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
 * [Animation of Kalman Filter and Ensemble Transform Kalman Filter](https://github.com/Alexander-Barth/DataAssim.jl)
 * [Jupter notebook in Julia showing how to download model and in situ data from CMEMS](https://github.com/Alexander-Barth/getting-ocean-data) 
-* [A simple 2D toy model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
+* [A simple 2D hydrodynamic toy model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
 
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
