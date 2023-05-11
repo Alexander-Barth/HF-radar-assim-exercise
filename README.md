@@ -31,7 +31,7 @@ More information about the installation is available [here](https://github.com/g
 
 ## Using Binder
 
-Click on the "launch binder" icon to start the notebooks. Setting-up the working environement on the binder service can take a couple of minutes. Binder will automatically shut down user sessions that have more than 10 minutes of inactivity. This will lead to the error message "Not Connected". If you use binder, you need to avoid any inactivity during a binder session.
+Click on the "launch binder" icon to start the notebooks. Setting-up the working environement on the binder service can take a couple of minutes. Binder will automatically shut down user sessions that have more than 10 minutes of inactivity. This will lead to the error message "Not Connected". If you use binder, you need to avoid any inactivity during a binder session. Binder might not be always available and therefore it is recommended to install all software on your computer.
 
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Alexander-Barth/HF-radar-assim-exercise/nb?filepath=assim_exercise.ipynb)
