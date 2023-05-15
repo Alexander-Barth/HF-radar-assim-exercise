@@ -1,5 +1,10 @@
 [![Build Status](https://github.com/Alexander-Barth/HF-radar-assim-exercise/workflows/CI/badge.svg)](https://github.com/Alexander-Barth/HF-radar-assim-exercise/actions)
 
+| :memo:        | Link to this page: https://tinyurl.com/assim-intro      |
+|---------------|:------------------------|
+
+
+
 
 # HF-radar-assim-exercise
 
