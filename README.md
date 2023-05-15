@@ -54,6 +54,7 @@ This create the folder `HF-radar-assim-exercise`
 ## Lecture Material
 
 * [Slides](https://data-assimilation.net/upload/Alex/Lecture/AssimLecture/assim_lecture_ogcb2022.pdf) 
+* [On-line demonstration of data assimilation](http://www.data-assimilation.net/Tools/AssimDemo/)
 * [Quick introduction to Julia](Julia.md)
 * [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
 * [Animation of Kalman Filter and Ensemble Transform Kalman Filter](https://github.com/Alexander-Barth/DataAssim.jl)
