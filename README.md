@@ -19,8 +19,7 @@ Required software:
 
 ```julia
 using Pkg
-Pkg.add(PackageSpec(url="https://github.com/Alexander-Barth/GeoMapping.jl", rev="master"))
-Pkg.add(["NCDatasets","PyPlot","Interpolations","DataAssim","IJulia"])
+Pkg.add(["NCDatasets","PyPlot","Interpolations","DataAssim","IJulia","GeoMapping"])
 using PyPlot
 using IJulia
 notebook()
