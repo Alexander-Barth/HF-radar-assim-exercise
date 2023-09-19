@@ -19,6 +19,9 @@ jobs:
           - x64
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3'
       - uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.version }}
@@ -33,7 +36,6 @@ jobs:
             ${{ runner.os }}-test-${{ env.cache-name }}-
             ${{ runner.os }}-test-
             ${{ runner.os }}-
-      - run: |
-          #git config --global user.name Tester
-          #git config --global user.email te@st.er
+      - name: run notebooks
+        run: |
           bash utils/ci-test
