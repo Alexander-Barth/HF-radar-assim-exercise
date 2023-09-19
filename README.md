@@ -1,5 +1,10 @@
 [![Build Status](https://github.com/Alexander-Barth/HF-radar-assim-exercise/workflows/CI/badge.svg)](https://github.com/Alexander-Barth/HF-radar-assim-exercise/actions)
 
+| :memo:        | Link to this page: https://tinyurl.com/assim-intro      |
+|---------------|:------------------------|
+
+
+
 
 # HF-radar-assim-exercise
 
@@ -49,12 +54,14 @@ This create the folder `HF-radar-assim-exercise`
 ## Lecture Material
 
 * [Slides](https://data-assimilation.net/upload/Alex/Lecture/AssimLecture/assim_lecture_ogcb2022.pdf) 
+* [On-line demonstration of data assimilation](http://www.data-assimilation.net/Tools/AssimDemo/)
 * [Quick introduction to Julia](Julia.md)
 * [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
 * [Animation of Kalman Filter and Ensemble Transform Kalman Filter](https://github.com/Alexander-Barth/DataAssim.jl)
 * [Jupter notebook in Julia showing how to download model and in situ data from CMEMS](https://github.com/Alexander-Barth/getting-ocean-data) 
-* [A simple 2D hydrodynamic toy model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
-
+* Toy models:
+    * [A simple 2D hydrodynamic Navier Stokes model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
+    * [2D shallow water model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/shallow_water.html)
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
  -->
