@@ -61,7 +61,7 @@ This create the folder `HF-radar-assim-exercise`
 * [Jupter notebook in Julia showing how to download model and in situ data from CMEMS](https://github.com/Alexander-Barth/getting-ocean-data) 
 * Toy models:
     * [A simple 2D hydrodynamic Navier Stokes model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
-    * [2D shallow water model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/shallow_water.html)
+    * [2D shallow water model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/ShallowWater/)
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
  -->
