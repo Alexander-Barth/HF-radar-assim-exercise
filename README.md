@@ -12,9 +12,8 @@
 
 Required software:
 
-* You need to install Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.9 or later of Julia (on Linux and Windows 10) and Mac OS should work too. Windows 7
-[is no longer support by Mircosoft](https://support.microsoft.com/en-us/help/4057281/windows-7-support-ended-on-january-14-2020) and is also no longer supported by Julia. 
-
+* You need to install Julia available from https://julialang.org/downloads/. The exercise is tested with the versions 1.9 or later of Julia (on Linux and Windows 10) and Mac OS should work too.
+  
 * In addition, you need to install some Julia packages. Once you start julia, you need to type (or better copy-paste) these commands:
 
 ```julia
