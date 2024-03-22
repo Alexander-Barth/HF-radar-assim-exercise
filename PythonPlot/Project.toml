@@ -1,0 +1,10 @@
+[deps]
+DataAssim = "cf87cc76-4620-5dad-9f0a-7411b2d39d18"
+GeoMapping = "855c05df-eed8-5362-a099-6b509f53b81a"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
+PythonPlot = "274fc56d-3b97-40fa-a1cd-1b4a50311bf9"
+
+[compat]
+julia = "~1.10"
