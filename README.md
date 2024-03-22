@@ -29,7 +29,14 @@ These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 On some older laptops, some steps can take quite a long time. It is not adviced to interrupt the installation process.
 
-If the installation of `PyPlot` fails one can also use the package `PythonPlot`. Simpy replace `PyPlot` with `PythonPlot` in the instructions above.
+If the installation of `PyPlot` fails, one can also use the package `PythonPlot`. 
+`PythonPlot` can be install by the following Julia commands:
+
+```julia
+using Pkg
+Pkg.add("PythonPlot")
+using PythonPlot
+```
 
 
 
