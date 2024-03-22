@@ -29,6 +29,10 @@ These commands will also install `matplotlib` and `jupyter`.
 Confirm the installation of `jupyter` with conda. The installation can take a while and should be done before the lecture.
 On some older laptops, some steps can take quite a long time. It is not adviced to interrupt the installation process.
 
+If the installation of `PyPlot` fails one can also use the package `PythonPlot`. Simpy replace `PyPlot` with `PythonPlot` in the instructions above.
+
+
+
 If for some reason, the installation fails and the problem cannot be resolved, one can try to use Binder (see below) as an alternative.
 More information about the installation is available [here](https://github.com/gher-ulg/Documentation/wiki/Installing-Julia).
 
