@@ -1,5 +1,5 @@
 
-Julia and IJulia typically installs its own Conda installation (for Jupyter) however this fails if the user has a [special character in its user name](https://github.com/conda/conda/issues/10239) on Windows. As most OGCB students have already Anaconda installed we will use the following steps are described here.
+Julia and IJulia typically install its own Conda installation (for Jupyter) however this fails if the user has a [special character in its user name](https://github.com/conda/conda/issues/10239) on Windows. As most OGCB students have already Anaconda installed we will use the following steps are described here.
 
 # Anaconda
 
