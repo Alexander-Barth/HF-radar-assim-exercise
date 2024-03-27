@@ -42,7 +42,7 @@ using IJulia
 jupyterlab()
 ```
 
-where you replace `"C:\Users\abarth\anaconda3\Scripts\jupyter.exe"` by *your* file path of the jupyter program (see previous steps).
+where you replace `"C:\Users\abarth\anaconda3\Scripts\jupyter.exe"` by *your* file path of the jupyter program (see previous steps). On Windows the path will have backslashes `\` while on Linux/Mac OS X it will have foreward slashes, for example `/home/abarth/.local/bin/jupyter`.
 
 
  
