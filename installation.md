@@ -1,4 +1,6 @@
 
+Julia and IJulia typically installs its own Conda installation (for Jupyter) however this fails if the user has a [special character in its user name](https://github.com/conda/conda/issues/10239) on Windows. As most OGCB students have already Anaconda installed we will use the following steps are described here.
+
 # Anaconda
 
 Install anaconda from https://www.anaconda.com/download. Select the default option during the installation. You can skip this step if you have it already installed.
