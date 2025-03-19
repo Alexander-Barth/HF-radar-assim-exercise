@@ -1,10 +1,8 @@
 [deps]
 DataAssim = "cf87cc76-4620-5dad-9f0a-7411b2d39d18"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 GeoMapping = "855c05df-eed8-5362-a099-6b509f53b81a"
 IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
 Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
 NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
-
-[compat]
-julia = "1"
