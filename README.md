@@ -62,10 +62,10 @@ This create the folder `HF-radar-assim-exercise`
 * [Exercise questions](https://alexander-barth.github.io/HF-radar-assim-exercise/slides/)
 * [Getting started on the juypter server](https://docs.google.com/presentation/d/1qBH95xkFxUFutUVEEatxDe__i0_vWlRqIYQoJuYj3mk/edit#slide=id.p)
 * [Animation of Kalman Filter and Ensemble Transform Kalman Filter](https://github.com/Alexander-Barth/DataAssim.jl)
-* [Jupter notebook in Julia showing how to download model and in situ data from CMEMS](https://github.com/Alexander-Barth/getting-ocean-data) 
 * Toy models:
     * [A simple 2D hydrodynamic Navier Stokes model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/)
     * [2D shallow water model](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/ShallowWater/)
+    * [Other models](https://alexander-barth.github.io/FluidSimDemo-WebAssembly/all_models.html)
 
 <!--  LocalWords:  assim caen sudo julia NetCDF PyPlot IJulia el cd
  -->
